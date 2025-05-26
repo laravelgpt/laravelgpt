@@ -1,110 +1,122 @@
-# 👋 Hi, I'm MD Shamim Hossain — aka `Script Coder`
+# 👋 MD Shamim Hossain — aka `Script Coder`
 
-🚀 Full-Stack Developer | 🤖 AI & OSINT Automation Architect | 🛠️ MCP Server & Mobile Tool Specialist  
-🔴 Founder of Red Hackers | 💥 Reverse Engineer | 🦠 Malware & Virus Analyst  
-📲 Mobile Unlock/Repair Tool Developer | 📡 Telegram Bot Engineer | 🔐 Lock/IMEI Tools (UFSTool)
+🚀 **Full-Stack Developer** | 🤖 **AI & OSINT Automation Architect** | 🔓 **Mobile Unlock Specialist**  
+🔴 **Founder of Red Hackers** | 💥 **Reverse Engineer** | 🦠 **Malware & Virus Analyst**  
+📡 **Telegram Bot Developer** | 🔐 **PHP ionCube Decoder Specialist** | 📂 **Data Scraping Expert**
 
 ---
 
 ## 🧠 About Me
 
-I build powerful and intelligent systems combining **AI**, **security**, **bot automation**, and **mobile technology**.  
-As the creator of **UFSTool-based IMEI unlock & mobile service tools**, my mission is to automate the future of:
+I'm a passionate developer bridging **software engineering**, **AI**, **offensive security**, and **mobile technology**. I create tools that **automate**, **secure**, and **unlock potential** in the digital world. From **Laravel SaaS platforms** and **Telegram bots** to **UFSTool-based mobile unlock systems** and **ionCube decryption tools**, my work pushes boundaries while prioritizing ethical use.
 
-- ✅ Phone repair & unlocking (IMEI/FRP/SIM)
-- ✅ Telegram bot panels
-- ✅ Red team tools (Botnet Labs, Breach Detection)
-- ✅ AI-integrated SaaS platforms
-
-I’m also the founder of **Red Hackers**, an elite team of developers researching:
-- Malware behavior & loaders  
-- MegaLeaks & breach scanning  
-- Lock/Unlock solutions for smartphones  
-- Telegram bots for automation and data scraping
+As the founder of **Red Hackers**, I lead research in:
+- **AI-Driven Malware Analysis** & Botnet Simulations  
+- **OSINT & MegaLeak Tracking**  
+- **Mobile IMEI/FRP Unlock Tools**  
+- **PHP ionCube Decoder Development**  
+- **Telegram Automation & Data Scraping**
 
 ---
 
-## 🔓 Mobile Repair & Unlock Tool Development
+## 🧰 My Arsenal
 
-### 📱 IMEI, FRP, SIM, Network Unlock Tools
-- **UFSTool-based Unlock Scripts**
-- **ADB/Fastboot automation panels**
-- Full **Dhru Fusion API** Integration (Laravel)
-- Device identification, lock status, status checks
-- One-click auto-detection + flash (modem/boot/vendor)
+### 💻 Web Development (SaaS + Secure)
+- **Laravel 10–12**, Livewire, Tailwind, Vue, Alpine.js  
+- **Dhru Fusion API** for IMEI/Remote Unlock SaaS  
+- Role-based dashboards (Admin, Seller, User)
 
-### 🛠️ Repair & Diagnostic Tools
-- Python GUI & batch script tools for:
-  - Bootloop fix, IMEI write
-  - Carrier unlock & region fix
-  - Eng Firmware flashers & modem patchers
+### 🔓 Mobile Unlock & Repair Tools
+- **UFSTool-based Scripts**: IMEI, FRP, SIM, Network Unlock  
+- **ADB/Fastboot Automation**: Flash, modem patching, bootloop fixes  
+- **Supported Brands**: Samsung, Xiaomi, Huawei, Vivo, Oppo  
 
-### 📦 Unlock SaaS Platform (Laravel 12)
-- IMEI/Server/Remote unlock ordering
-- Admin/user dashboards
-- Telegram bot integration
-- Real-time status sync with server
+### 🤖 Telegram Bot Development
+- Multi-purpose bots with:  
+  - File upload/download, encryption, and obfuscation  
+  - IMEI service panels & real-time alerts  
+  - Auto-scraping for messages, users, and channels  
 
-### 🧪 Supported Brands
-- Samsung, Xiaomi, Huawei, Vivo, Oppo
-- Qualcomm, MTK, SPD-based devices
-- Support for `modem_a`/`modem_b`, `engMODEM`, and `NV` tools
+### 🧲 OSINT & Scraping
+- Email/IP/Phone/Dark Web recon bots  
+- Telegram-integrated data harvesting  
+- Automated breach detection & alert systems  
+
+### 🐘 PHP Botnet & Security Tools
+- **ionCube Loader Decoder** (PHP-based, educational use)  
+- **Botnet Panels** for red team simulations (VM-only)  
+- Encrypted C2 communication via PHP sockets  
+
+### 🖥️ Desktop Apps
+- **Python**: Tkinter, PyQt5, CustomTkinter  
+- **C#/VB.NET**: GUI tools, obfuscators, and simulators  
+- Key projects: Telegram GUIs, file encryptors, TeraBox downloaders  
+
+### 🤖 AI & LLM Integrations
+- **OpenAI, Claude, Gemini**: Text, image, code generation  
+- Laravel-based GPT SaaS platforms  
+
+### 🔐 Reverse Engineering & Malware Analysis
+- **ionCube Decoder** for PHP script analysis (ethical use only)  
+- CrackMe solvers, IDA, x64dbg, Ghidra  
+- Malware behavior analysis (keyloggers, RATs, trojans)  
 
 ---
 
-## 🔧 Tools in This Category
+## 🔧 Featured Projects
 
 | Tool | Description |
 |------|-------------|
-| `UFSTool Pro` | Python + Batch unlocker, modem flasher, GUI  
-| `IMEI Laravel Panel` | SaaS-based Dhru platform with packages & sync  
-| `ADB Script Suite` | Command suite for unlock, FRP, and fastboot ops  
-| `Telegram UnlockBot` | Accept IMEI requests via Telegram and process via API  
-| `Unlock GUI App` | Python/C#/VB GUI app with Flash/IMEI/Repair tools
+| **ionCube PHP Decoder** | Decodes ionCube-encrypted PHP files for analysis (Educational) |
+| **Python ionCube Decoder** | Python-based tool for ionCube file inspection |
+| **IMEI Sync Pro** | Laravel + Dhru API SaaS for mobile unlocking |
+| **LeakHunter** | Telegram + Web dashboard for breach tracking |
+| **RedBot** | Telegram bot with scraping, file ops, and automation |
+| **UFSTool Pro** | Python + Batch tool for mobile unlock/repair |
+| **TeraBox Downloader GUI** | Python desktop app for file fetching |
 
 ---
 
-## 🧬 Tech Stack & Tools
+## 🧬 Tech Stack
 
-**Languages**: Python, Batch, VB.NET, C#, PHP, JavaScript  
-**Tech**: ADB, Fastboot, Dhru API, EDL/Qualcomm, MTK tools  
-**Frontend**: Tailwind, Alpine.js, Blade, Livewire  
-**AI Integration**: GPT-4.5, Whisper, Claude  
-**Tools**: IDA, x64dbg, PyInstaller, WinForms, CustomTkinter  
-**Bots**: Telethon, Pyrogram, Telegram Bot API
-
----
-
-## 📌 Live Projects
-
-- [TeraBox Downloader GUI](https://github.com/laravelgpt/terabox-downloader-desktop-gui)
-- [Telegram Account Deleter (Python GUI)](https://github.com/laravelgpt/telegram-account-delete-desktop-application-python)
-- [Laravel IMEI/Dhru Panel](https://github.com/laravelgpt)  
-- [RedBot Telegram System](Private)  
-- [UFSTool Unlock Suite](Private)
+**Languages**: PHP, Python, JavaScript, C++, C#, VB.NET, SQL, Bash  
+**Frameworks**: Laravel, Tailwind, PyQt, Tkinter, Vue, WinForms  
+**AI Models**: GPT-4.5, Claude, Gemini, SDXL, Whisper  
+**Security Tools**: IDA, Ghidra, Radare2, Wireshark, PEStudio  
+**Bot Tools**: Pyrogram, Telethon, PHP Sockets, Telegram Bot API  
+**Mobile Tools**: UFSTool, ADB, Fastboot, Dhru API  
 
 ---
 
-## 📲 Telegram Bots & Control
+## 🌐 Live Projects
 
-- IMEI status bot  
-- Order confirmation bot (IMEI/FRP/Server unlock)  
-- Auto file sender, ZIP decrypt, script runner  
-- Admin-only botnet controller interface (Educational)
+- [Laravel IMEI Panel + Dhru](https://github.com/laravelgpt)  
+- [TeraBox Downloader GUI](https://github.com/laravelgpt/terabox-downloader-desktop-gui)  
+- [Telegram Account Deleter](https://github.com/laravelgpt/telegram-account-delete-desktop-application-python)  
+- **ionCube Decoder Suite** (Private, Request Access)  
+- **RedBot Telegram System** (Private)  
+
+---
+
+## 🎯 Upcoming Projects
+
+- **Web Crawler for MegaLeaks**  
+- **Telegram LLM Assistant** with file AI capabilities  
+- **RedHackerShell**: Terminal for tool/script execution  
+- **PHP ionCube Decoder Public Edition** (Educational VM-only)  
+- **Laravel Breach Engine** with API tracking  
 
 ---
 
 ## 🌍 Connect with Me
 
-- 🐙 GitHub: [github.com/laravelgpt](https://github.com/laravelgpt)  
-- 📡 Telegram: `@ComingSoon`  
-- 🌐 Website: Coming Soon  
-- 📘 Facebook: [facebook.com/shamimdevs](https://facebook.com/shamimdevs)
+- 🐙 **GitHub**: [github.com/laravelgpt](https://github.com/laravelgpt)  
+- 📡 **Telegram**: `@ComingSoon`  
+- 🌐 **Website**: Coming Soon  
+- 📘 **Facebook**: [facebook.com/shamimdevs](https://facebook.com/shamimdevs)
 
 ---
 
-> 🧠 “Unlock the future. Repair what others fear. Automate what others can’t.”  
-> — `Script Coder` / Red Hackers / UFSTool Project
-> **🧙 Nothing is impossible — everything is possible. Hacking is not just skill, it's magic.**
-# laravelgpt
-# laravelgpt
+> 🧠 **“Code the unseen. Automate the unknown. Unlock the impossible.”**  
+  > — *Script Coder* / Red Hackers Founder
+>  🧙 Nothing is impossible — everything is possible. Hacking is not just skill, it's magic.—
