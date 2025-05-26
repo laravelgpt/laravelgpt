@@ -119,4 +119,4 @@ As the founder of **Red Hackers**, I lead research in:
 
 > 🧠 **“Code the unseen. Automate the unknown. Unlock the impossible.”**  
   > — *Script Coder* / Red Hackers Founder
->  🧙 Nothing is impossible — everything is possible. Hacking is not just skill, it's magic.—
+  > -🧙 Nothing is impossible — everything is possible. Hacking is not just skill, it's magic.
