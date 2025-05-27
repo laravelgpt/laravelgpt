@@ -7,12 +7,12 @@ import { getCurrentVersion } from './utils/versionUtils';
 
 export const VIBE_TOOLS_RULES_VERSION = getCurrentVersion();
 
-// The core vibe-tools content to be included in all templates
+// The core laravelgpt content to be included in all templates
 export const VIBE_TOOLS_CORE_CONTENT = `# Instructions
 Use the following commands to get AI assistance:
 
 **Direct Model Queries:**
-\`vibe-tools ask "<your question>" --provider <provider> --model <model>\` - Ask any model from any provider a direct question (e.g., \`vibe-tools ask "What is the capital of France?" --provider openai --model o3-mini\`). Note that this command is generally less useful than other commands like \`repo\` or \`plan\` because it does not include any context from your codebase or repository. In general you should not use the ask command because it does not include any context. The other commands like \`web\`, \`doc\`, \`repo\`, or \`plan\` are usually better. If you are using it, make sure to include in your question all the information and context that the model might need to answer usefully.
+\`laravelgpt ask "<your question>" --provider <provider> --model <model>\` - Ask any model from any provider a direct question (e.g., \`laravelgpt ask "What is the capital of France?" --provider openai --model o3-mini\`). Note that this command is generally less useful than other commands like \`repo\` or \`plan\` because it does not include any context from your codebase or repository. In general you should not use the ask command because it does not include any context. The other commands like \`web\`, \`doc\`, \`repo\`, or \`plan\` are usually better. If you are using it, make sure to include in your question all the information and context that the model might need to answer usefully.
 
 **Ask Command Options:**
 --provider=<provider>: AI provider to use (openai, anthropic, perplexity, gemini, modelbox, openrouter, or xai)
@@ -21,7 +21,7 @@ Use the following commands to get AI assistance:
 --with-doc=<doc_url>: Fetch content from one or more document URLs and include it as context. Can be specified multiple times (e.g., \`--with-doc=<url1> --with-doc=<url2>\`).
 
 **Implementation Planning:**
-\`vibe-tools plan "<query>"\` - Generate a focused implementation plan using AI (e.g., \`vibe-tools plan "Add user authentication to the login page"\`)
+\`laravelgpt plan "<query>"\` - Generate a focused implementation plan using AI (e.g., \`laravelgpt plan "Add user authentication to the login page"\`)
 The plan command uses multiple AI models to:
 1. Identify relevant files in your codebase (using Gemini by default)
 2. Extract content from those files
@@ -35,7 +35,7 @@ The plan command uses multiple AI models to:
 --with-doc=<doc_url>: Fetch content from one or more document URLs and include it as context for both file identification and planning. Can be specified multiple times (e.g., \`--with-doc=<url1> --with-doc=<url2>\`).
 
 **Web Search:**
-\`vibe-tools web "<your question>"\` - Get answers from the web using a provider that supports web search (e.g., Perplexity models and Gemini Models either directly or from OpenRouter or ModelBox) (e.g., \`vibe-tools web "latest shadcn/ui installation instructions"\`)
+\`laravelgpt web "<your question>"\` - Get answers from the web using a provider that supports web search (e.g., Perplexity models and Gemini Models either directly or from OpenRouter or ModelBox) (e.g., \`laravelgpt web "latest shadcn/ui installation instructions"\`)
 Note: web is a smart autonomous agent with access to the internet and an extensive up to date knowledge base. Web is NOT a web search engine. Always ask the agent for what you want using a proper sentence, do not just send it a list of keywords. In your question to web include the context and the goal that you're trying to acheive so that it can help you most effectively.
 when using web for complex queries suggest writing the output to a file somewhere like local-research/<query summary>.md.
 
@@ -45,45 +45,45 @@ when using web for complex queries suggest writing the output to a file somewher
 --provider=<provider>: AI provider to use (perplexity, gemini, modelbox, or openrouter)
 
 **Repository Context:**
-\`vibe-tools repo "<your question>" [--subdir=<path>] [--from-github=<username/repo>] [--with-doc=<doc_url>...]\` - Get context-aware answers about this repository using Google Gemini (e.g., \`vibe-tools repo "explain authentication flow"\`)
-Use the optional \`--subdir\` parameter to analyze a specific subdirectory instead of the entire repository (e.g., \`vibe-tools repo "explain the code structure" --subdir=src/components\`). Use the optional \`--from-github\` parameter to analyze a remote GitHub repository without cloning it locally (e.g., \`vibe-tools repo "explain the authentication system" --from-github=username/repo-name\`). Use the optional \`--with-doc\` parameter multiple times to include content from several URLs as additional context (e.g., \`vibe-tools repo "summarize findings" --with-doc=https://example.com/spec1 --with-doc=https://example.com/spec2\`).
+\`laravelgpt repo "<your question>" [--subdir=<path>] [--from-github=<username/repo>] [--with-doc=<doc_url>...]\` - Get context-aware answers about this repository using Google Gemini (e.g., \`laravelgpt repo "explain authentication flow"\`)
+Use the optional \`--subdir\` parameter to analyze a specific subdirectory instead of the entire repository (e.g., \`laravelgpt repo "explain the code structure" --subdir=src/components\`). Use the optional \`--from-github\` parameter to analyze a remote GitHub repository without cloning it locally (e.g., \`laravelgpt repo "explain the authentication system" --from-github=username/repo-name\`). Use the optional \`--with-doc\` parameter multiple times to include content from several URLs as additional context (e.g., \`laravelgpt repo "summarize findings" --with-doc=https://example.com/spec1 --with-doc=https://example.com/spec2\`).
 
 **Documentation Generation:**
-\`vibe-tools doc [options] [--with-doc=<doc_url>...]\` - Generate comprehensive documentation for this repository (e.g., \`vibe-tools doc --output docs.md\`). Can incorporate document context from multiple URLs (e.g., \`vibe-tools doc --with-doc=https://example.com/existing-docs --with-doc=https://example.com/new-spec\`).
+\`laravelgpt doc [options] [--with-doc=<doc_url>...]\` - Generate comprehensive documentation for this repository (e.g., \`laravelgpt doc --output docs.md\`). Can incorporate document context from multiple URLs (e.g., \`laravelgpt doc --with-doc=https://example.com/existing-docs --with-doc=https://example.com/new-spec\`).
 
 **YouTube Video Analysis:**
-\`vibe-tools youtube "<youtube-url>" [question] [--type=<summary|transcript|plan|review|custom>]\` - Analyze YouTube videos and generate detailed reports (e.g., \`vibe-tools youtube "https://youtu.be/43c-Sm5GMbc" --type=summary\`)
-Note: The YouTube command requires a \`GEMINI_API_KEY\` to be set in your environment or .vibe-tools.env file as the GEMINI API is the only interface that supports YouTube analysis.
+\`laravelgpt youtube "<youtube-url>" [question] [--type=<summary|transcript|plan|review|custom>]\` - Analyze YouTube videos and generate detailed reports (e.g., \`laravelgpt youtube "https://youtu.be/43c-Sm5GMbc" --type=summary\`)
+Note: The YouTube command requires a \`GEMINI_API_KEY\` to be set in your environment or .laravelgpt.env file as the GEMINI API is the only interface that supports YouTube analysis.
 
 **GitHub Information:**
-\`vibe-tools github pr [number]\` - Get the last 10 PRs, or a specific PR by number (e.g., \`vibe-tools github pr 123\`)
-\`vibe-tools github issue [number]\` - Get the last 10 issues, or a specific issue by number (e.g., \`vibe-tools github issue 456\`)
+\`laravelgpt github pr [number]\` - Get the last 10 PRs, or a specific PR by number (e.g., \`laravelgpt github pr 123\`)
+\`laravelgpt github issue [number]\` - Get the last 10 issues, or a specific issue by number (e.g., \`laravelgpt github issue 456\`)
 
 **ClickUp Information:**
-\`vibe-tools clickup task <task_id>\` - Get detailed information about a ClickUp task including description, comments, status, assignees, and metadata (e.g., \`vibe-tools clickup task "task_id"\`)
+\`laravelgpt clickup task <task_id>\` - Get detailed information about a ClickUp task including description, comments, status, assignees, and metadata (e.g., \`laravelgpt clickup task "task_id"\`)
 
 **Wait Command:**
-\`vibe-tools wait <seconds>\` - Pauses execution for the specified number of seconds (e.g., \`vibe-tools wait 5\` to wait for 5 seconds).
+\`laravelgpt wait <seconds>\` - Pauses execution for the specified number of seconds (e.g., \`laravelgpt wait 5\` to wait for 5 seconds).
 
 **Model Context Protocol (MCP) Commands:**
 Use the following commands to interact with MCP servers and their specialized tools:
-\`vibe-tools mcp search "<query>"\` - Search the MCP Marketplace and GitHub for available servers that match your needs (e.g., \`vibe-tools mcp search "git repository management"\`)
-\`vibe-tools mcp run "<query>"\` - Execute MCP server tools using natural language queries (e.g., \`vibe-tools mcp run "list files in the current directory" --provider=openrouter\`). The query must include sufficient information for vibe-tools to determine which server to use, provide plenty of context.
+\`laravelgpt mcp search "<query>"\` - Search the MCP Marketplace and GitHub for available servers that match your needs (e.g., \`laravelgpt mcp search "git repository management"\`)
+\`laravelgpt mcp run "<query>"\` - Execute MCP server tools using natural language queries (e.g., \`laravelgpt mcp run "list files in the current directory" --provider=openrouter\`). The query must include sufficient information for laravelgpt to determine which server to use, provide plenty of context.
 
-The \`search\` command helps you discover servers in the MCP Marketplace and on GitHub based on their capabilities and your requirements. The \`run\` command automatically selects and executes appropriate tools from these servers based on your natural language queries. If you want to use a specific server include the server name in your query. E.g. \`vibe-tools mcp run "using the mcp-server-sqlite list files in directory --provider=openrouter"\`
+The \`search\` command helps you discover servers in the MCP Marketplace and on GitHub based on their capabilities and your requirements. The \`run\` command automatically selects and executes appropriate tools from these servers based on your natural language queries. If you want to use a specific server include the server name in your query. E.g. \`laravelgpt mcp run "using the mcp-server-sqlite list files in directory --provider=openrouter"\`
 
 **Notes on MCP Commands:**
 - MCP commands require \`ANTHROPIC_API_KEY\` or \`OPENROUTER_API_KEY\` to be set in your environment
 - By default the \`mcp\` command uses Anthropic, but takes a --provider argument that can be set to 'anthropic' or 'openrouter'
 - Results are streamed in real-time for immediate feedback
 - Tool calls are automatically cached to prevent redundant operations
-- Often the MCP server will not be able to run because environment variables are not set. If this happens ask the user to add the missing environment variables to the cursor tools env file at ~/.vibe-tools/.env
+- Often the MCP server will not be able to run because environment variables are not set. If this happens ask the user to add the missing environment variables to the cursor tools env file at ~/.laravelgpt/.env
 
 **Stagehand Browser Automation:**
-\`vibe-tools browser open <url> [options]\` - Open a URL and capture page content, console logs, and network activity (e.g., \`vibe-tools browser open "https://example.com" --html\`)
-\`vibe-tools browser act "<instruction>" --url=<url | 'current'> [options]\` - Execute actions on a webpage using natural language instructions (e.g., \`vibe-tools browser act "Click Login" --url=https://example.com\`)
-\`vibe-tools browser observe "<instruction>" --url=<url> [options]\` - Observe interactive elements on a webpage and suggest possible actions (e.g., \`vibe-tools browser observe "interactive elements" --url=https://example.com\`)
-\`vibe-tools browser extract "<instruction>" --url=<url> [options]\` - Extract data from a webpage based on natural language instructions (e.g., \`vibe-tools browser extract "product names" --url=https://example.com/products\`)
+\`laravelgpt browser open <url> [options]\` - Open a URL and capture page content, console logs, and network activity (e.g., \`laravelgpt browser open "https://example.com" --html\`)
+\`laravelgpt browser act "<instruction>" --url=<url | 'current'> [options]\` - Execute actions on a webpage using natural language instructions (e.g., \`laravelgpt browser act "Click Login" --url=https://example.com\`)
+\`laravelgpt browser observe "<instruction>" --url=<url> [options]\` - Observe interactive elements on a webpage and suggest possible actions (e.g., \`laravelgpt browser observe "interactive elements" --url=https://example.com\`)
+\`laravelgpt browser extract "<instruction>" --url=<url> [options]\` - Extract data from a webpage based on natural language instructions (e.g., \`laravelgpt browser extract "product names" --url=https://example.com/products\`)
 
 **Notes on Browser Commands:**
 - All browser commands are stateless unless --connect-to is used to connect to a long-lived interactive session. In disconnected mode each command starts with a fresh browser instance and closes it when done.
@@ -91,24 +91,24 @@ The \`search\` command helps you discover servers in the MCP Marketplace and on 
   - \`current\`: Use the existing page without reloading
   - \`reload-current\`: Use the existing page and refresh it (useful in development)
   - If working interactively with a user you should always use --url=current unless you specifically want to navigate to a different page. Setting the url to anything else will cause a page refresh loosing current state.
-- Multi step workflows involving state or combining multiple actions are supported in the \`act\` command using the pipe (|) separator (e.g., \`vibe-tools browser act "Click Login | Type 'user@example.com' into email | Click Submit" --url=https://example.com\`)
+- Multi step workflows involving state or combining multiple actions are supported in the \`act\` command using the pipe (|) separator (e.g., \`laravelgpt browser act "Click Login | Type 'user@example.com' into email | Click Submit" --url=https://example.com\`)
 - Video recording is available for all browser commands using the \`--video=<directory>\` option. This will save a video of the entire browser interaction at 1280x720 resolution. The video file will be saved in the specified directory with a timestamp.
 - DO NOT ask browser act to "wait" for anything, the wait command is currently disabled in Stagehand.
 
 **Tool Recommendations:**
-- \`vibe-tools web\` is best for general web information not specific to the repository. Generally call this without additional arguments.
-- \`vibe-tools repo\` is ideal for repository-specific questions, planning, code review and debugging. E.g. \`vibe-tools repo "Review recent changes to command error handling looking for mistakes, omissions and improvements"\`. Generally call this without additional arguments.
-- \`vibe-tools plan\` is ideal for planning tasks. E.g. \`vibe-tools plan "Adding authentication with social login using Google and Github"\`. Generally call this without additional arguments.
-- \`vibe-tools doc\` generates documentation for local or remote repositories.
-- \`vibe-tools youtube\` analyzes YouTube videos to generate summaries, transcripts, implementation plans, or custom analyses
-- \`vibe-tools browser\` is useful for testing and debugging web apps and uses Stagehand
-- \`vibe-tools mcp\` enables interaction with specialized tools through MCP servers (e.g., for Git operations, file system tasks, or custom tools)
-- **URLS:** For any specific URL (documentation, article, reference, spec, GitHub repo, etc.), ALWAYS use a command with the \`--with-doc=<url>\` parameter rather than the \`web\` command. Examples: \`vibe-tools repo "How should I implement this feature based on the spec?" --with-doc=https://example.com/spec.pdf\` or \`vibe-tools ask "What does this document say about authentication?" --with-doc=https://example.com/auth-doc.html\`
-- When implementing features based on documentation, specifications, or any external content, always use the \`--with-doc=<url>\` flag instead of built-in web search. For example: \`vibe-tools plan "Implement login page according to specs" --with-doc=https://example.com/specs.pdf\` or \`vibe-tools repo "How should I implement this feature?" --with-doc=https://example.com/feature-spec.md\`.
+- \`laravelgpt web\` is best for general web information not specific to the repository. Generally call this without additional arguments.
+- \`laravelgpt repo\` is ideal for repository-specific questions, planning, code review and debugging. E.g. \`laravelgpt repo "Review recent changes to command error handling looking for mistakes, omissions and improvements"\`. Generally call this without additional arguments.
+- \`laravelgpt plan\` is ideal for planning tasks. E.g. \`laravelgpt plan "Adding authentication with social login using Google and Github"\`. Generally call this without additional arguments.
+- \`laravelgpt doc\` generates documentation for local or remote repositories.
+- \`laravelgpt youtube\` analyzes YouTube videos to generate summaries, transcripts, implementation plans, or custom analyses
+- \`laravelgpt browser\` is useful for testing and debugging web apps and uses Stagehand
+- \`laravelgpt mcp\` enables interaction with specialized tools through MCP servers (e.g., for Git operations, file system tasks, or custom tools)
+- **URLS:** For any specific URL (documentation, article, reference, spec, GitHub repo, etc.), ALWAYS use a command with the \`--with-doc=<url>\` parameter rather than the \`web\` command. Examples: \`laravelgpt repo "How should I implement this feature based on the spec?" --with-doc=https://example.com/spec.pdf\` or \`laravelgpt ask "What does this document say about authentication?" --with-doc=https://example.com/auth-doc.html\`
+- When implementing features based on documentation, specifications, or any external content, always use the \`--with-doc=<url>\` flag instead of built-in web search. For example: \`laravelgpt plan "Implement login page according to specs" --with-doc=https://example.com/specs.pdf\` or \`laravelgpt repo "How should I implement this feature?" --with-doc=https://example.com/feature-spec.md\`.
 - When a user provides a specific URL for documentation or reference material, always use the \`--with-doc=<url>\` flag with that URL rather than attempting to search for or summarize the content independently. This ensures the exact document is used as context.
 
 **Running Commands:**
-1. Use \`vibe-tools <command>\` to execute commands (make sure vibe-tools is installed globally using npm install -g vibe-tools so that it is in your PATH)
+1. Use \`laravelgpt <command>\` to execute commands (make sure laravelgpt is installed globally using npm install -g laravelgpt so that it is in your PATH)
 
 **General Command Options (Supported by all commands):**
 --provider=<provider>: AI provider to use (openai, anthropic, perplexity, gemini, openrouter, modelbox, or xai). If provider is not specified, the default provider for that task will be used.
@@ -156,36 +156,36 @@ The \`search\` command helps you discover servers in the MCP Marketplace and on 
 
 **Nicknames**
 Users can ask for these tools using nicknames
-Gemini is a nickname for vibe-tools repo
-Perplexity is a nickname for vibe-tools web
-Stagehand is a nickname for vibe-tools browser
-If people say "ask Gemini" or "ask Perplexity" or "ask Stagehand" they mean to use the \`vibe-tools\` command with the \`repo\`, \`web\`, or \`browser\` commands respectively.
+Gemini is a nickname for laravelgpt repo
+Perplexity is a nickname for laravelgpt web
+Stagehand is a nickname for laravelgpt browser
+If people say "ask Gemini" or "ask Perplexity" or "ask Stagehand" they mean to use the \`laravelgpt\` command with the \`repo\`, \`web\`, or \`browser\` commands respectively.
 
 **Xcode Commands:**
-\`vibe-tools xcode build [buildPath=<path>] [destination=<destination>]\` - Build Xcode project and report errors.
+\`laravelgpt xcode build [buildPath=<path>] [destination=<destination>]\` - Build Xcode project and report errors.
 **Build Command Options:**
 --buildPath=<path>: (Optional) Specifies a custom directory for derived build data. Defaults to ./.build/DerivedData.
 --destination=<destination>: (Optional) Specifies the destination for building the app (e.g., 'platform=iOS Simulator,name=iPhone 16 Pro'). Defaults to 'platform=iOS Simulator,name=iPhone 16 Pro'.
 
-\`vibe-tools xcode run [destination=<destination>]\` - Build and run the Xcode project on a simulator.
+\`laravelgpt xcode run [destination=<destination>]\` - Build and run the Xcode project on a simulator.
 **Run Command Options:**
 --destination=<destination>: (Optional) Specifies the destination simulator (e.g., 'platform=iOS Simulator,name=iPhone 16 Pro'). Defaults to 'platform=iOS Simulator,name=iPhone 16 Pro'.
 
-\`vibe-tools xcode lint\` - Run static analysis on the Xcode project to find and fix issues.
+\`laravelgpt xcode lint\` - Run static analysis on the Xcode project to find and fix issues.
 
 **Additional Notes:**
-- For detailed information, see \`node_modules/vibe-tools/README.md\` (if installed locally).
-- Configuration is in \`vibe-tools.config.json\` (or \`~/.vibe-tools/config.json\`).
-- API keys are loaded from \`.vibe-tools.env\` (or \`~/.vibe-tools/.env\`).
-- ClickUp commands require a \`CLICKUP_API_TOKEN\` to be set in your \`.vibe-tools.env\` file.
-- Available models depend on your configured provider (OpenAI, Anthropic, xAI, etc.) in \`vibe-tools.config.json\`.
+- For detailed information, see \`node_modules/laravelgpt/README.md\` (if installed locally).
+- Configuration is in \`laravelgpt.config.json\` (or \`~/.laravelgpt/config.json\`).
+- API keys are loaded from \`.laravelgpt.env\` (or \`~/.laravelgpt/.env\`).
+- ClickUp commands require a \`CLICKUP_API_TOKEN\` to be set in your \`.laravelgpt.env\` file.
+- Available models depend on your configured provider (OpenAI, Anthropic, xAI, etc.) in \`laravelgpt.config.json\`.
 - repo has a limit of 2M tokens of context. The context can be reduced by filtering out files in a .repomixignore file.
 - problems running browser commands may be because playwright is not installed. Recommend installing playwright globally.
 - MCP commands require \`ANTHROPIC_API_KEY\` or \`OPENROUTER_API_KEY\`
 - **Remember:** You're part of a team of superhuman expert AIs. Work together to solve complex problems.
 - **Repomix Configuration:** You can customize which files are included/excluded during repository analysis by creating a \`repomix.config.json\` file in your project root. This file will be automatically detected by \`repo\`, \`plan\`, and \`doc\` commands.
 
-<!-- vibe-tools-version: ${VIBE_TOOLS_RULES_VERSION} -->`;
+<!-- laravelgpt-version: ${VIBE_TOOLS_RULES_VERSION} -->`;
 
 // Generate rules for different IDEs
 export function generateRules(ide: string): string {
@@ -200,20 +200,20 @@ alwaysApply: true
   }
 
   // Common intro text for all IDEs
-  const introText = `${header}vibe-tools is a CLI tool that allows you to interact with AI models and other tools.
-vibe-tools is installed on this machine and it is available to you to execute. You're encouraged to use it.`;
+  const introText = `${header}laravelgpt is a CLI tool that allows you to interact with AI models and other tools.
+laravelgpt is installed on this machine and it is available to you to execute. You're encouraged to use it.`;
 
   // All IDEs currently use the same core content structure
   return `${introText}
 
-<vibe-tools Integration>
+<laravelgpt Integration>
 ${VIBE_TOOLS_CORE_CONTENT}
-</vibe-tools Integration>`;
+</laravelgpt Integration>`;
 }
 
-const VIBE_HOME_DIR = join(homedir(), '.vibe-tools');
+const VIBE_HOME_DIR = join(homedir(), '.laravelgpt');
 const VIBE_HOME_CONFIG_PATH = join(VIBE_HOME_DIR, 'config.json');
-const LOCAL_CONFIG_FILENAME = 'vibe-tools.config.json';
+const LOCAL_CONFIG_FILENAME = 'laravelgpt.config.json';
 
 // Helper function to determine the correct rule file path (local or global)
 export function getRuleFilePath(
@@ -226,17 +226,17 @@ export function getRuleFilePath(
   switch (ideLower) {
     case 'cursor':
       return {
-        path: join(targetDir, '.cursor', 'rules', 'vibe-tools.mdc'),
+        path: join(targetDir, '.cursor', 'rules', 'laravelgpt.mdc'),
         updateMethod: 'overwrite',
       };
     case 'windsurf':
       return { path: join(targetDir, '.windsurfrules'), updateMethod: 'inject' };
     case 'cline':
     case 'roo': {
-      // Handle legacy .clinerules file vs new .clinerules/vibe-tools.md structure
+      // Handle legacy .clinerules file vs new .clinerules/laravelgpt.md structure
       const legacyPath = join(targetDir, '.clinerules');
       const newDirPath = join(targetDir, '.clinerules');
-      const newFilePath = join(newDirPath, 'vibe-tools.md');
+      const newFilePath = join(newDirPath, 'laravelgpt.md');
 
       try {
         const stats = statSync(legacyPath);
@@ -324,7 +324,7 @@ export function checkFileForVibeTag(targetDir: string, ide: string): boolean {
   }
   try {
     const content = readFileSync(ruleFilePath, 'utf-8');
-    return content.includes('<vibe-tools Integration>');
+    return content.includes('<laravelgpt Integration>');
   } catch /* (error) */ {
     // console.warn(`Warning: Could not read file ${ruleFilePath} for tag check:`, error);
     return false;
@@ -387,8 +387,8 @@ export async function updateProjectRulesFile(
         }
       }
 
-      const tagStart = '<vibe-tools Integration>';
-      const tagEnd = '</vibe-tools Integration>';
+      const tagStart = '<laravelgpt Integration>';
+      const tagEnd = '</laravelgpt Integration>';
       const tagStartIndex = existingContent.indexOf(tagStart);
       const tagEndIndex = existingContent.indexOf(tagEnd);
 
@@ -451,7 +451,7 @@ export function isRulesContentUpToDate(
       // If the determined rules file doesn't exist, it needs "updating" (creation)
       return {
         needsUpdate: true,
-        message: `Rules file for ${ide} not found at expected location ${ruleFilePath}. Run vibe-tools install . to create it.`,
+        message: `Rules file for ${ide} not found at expected location ${ruleFilePath}. Run laravelgpt install . to create it.`,
         path: ruleFilePath,
       };
     }
@@ -464,25 +464,25 @@ export function isRulesContentUpToDate(
     };
   }
 
-  const startTag = '<vibe-tools Integration>';
-  const endTag = '</vibe-tools Integration>';
+  const startTag = '<laravelgpt Integration>';
+  const endTag = '</laravelgpt Integration>';
 
   if (!content.includes(startTag) || !content.includes(endTag)) {
     return {
       needsUpdate: true, // Needs update if tags are missing
-      message: `vibe-tools section not found in rules file ${ruleFilePath}. Run vibe-tools install . to create or update it.`,
+      message: `laravelgpt section not found in rules file ${ruleFilePath}. Run laravelgpt install . to create or update it.`,
       path: ruleFilePath, // Include path
     };
   }
 
   // Check version within the tags
-  const versionMatch = content.match(/<!-- vibe-tools-version: ([\w.-]+) -->/);
+  const versionMatch = content.match(/<!-- laravelgpt-version: ([\w.-]+) -->/);
   const fileVersion = versionMatch ? versionMatch[1] : '0'; // Default to '0' if version comment not found
 
   if (fileVersion !== VIBE_TOOLS_RULES_VERSION) {
     return {
       needsUpdate: true,
-      message: `Your vibe-tools rules file at ${ruleFilePath} is using version ${fileVersion}, but the current version is ${VIBE_TOOLS_RULES_VERSION}. Run vibe-tools install . to update.`,
+      message: `Your laravelgpt rules file at ${ruleFilePath} is using version ${fileVersion}, but the current version is ${VIBE_TOOLS_RULES_VERSION}. Run laravelgpt install . to update.`,
       path: ruleFilePath, // Include path
     };
   }
@@ -490,3 +490,5 @@ export function isRulesContentUpToDate(
   // Tags and version are correct
   return { needsUpdate: false, path: ruleFilePath }; // Include path even if up-to-date
 }
+
+export { VIBE_TOOLS_CORE_CONTENT as LARAVELGPT_CORE_CONTENT, VIBE_TOOLS_RULES_VERSION as LARAVELGPT_RULES_VERSION };

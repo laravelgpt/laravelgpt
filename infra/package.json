@@ -1,18 +1,22 @@
 {
-  "name": "vibe-tools-infra",
+  "name": "laravelgpt-infra",
+  "version": "1.0.0",
+  "description": "Infrastructure for LaravelGPT",
   "private": true,
   "type": "module",
   "scripts": {
     "typecheck": "nuxt typecheck && echo 'running typecheck' && tsc -build && echo 'typecheck done'",
     "build": "nuxt build",
-    "dev": "nuxt dev",
-    "deploy": "bun run alchemy/alchemy.run.ts",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint --fix ."
   },
   "dependencies": {
+    "@cloudflare/workers-types": "^4.20240208.0",
+    "wrangler": "^3.0.0",
     "@nuxt/eslint": "^1.4.0",
     "@types/node": "^22.15.12",
     "alchemy": "^0.16.6",
@@ -23,7 +27,6 @@
     "vue-tsc": "^2.2.10"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250506.0",
     "miniflare": "^4.20250428.1"
   }
 }

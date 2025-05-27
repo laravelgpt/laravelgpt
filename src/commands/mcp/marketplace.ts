@@ -203,7 +203,7 @@ export class MarketplaceManager {
       const allServers = [...marketplaceData.servers, ...githubMcpServers];
 
       // 5. Use Gemini to find semantic matches across all servers
-      const provider = createProvider('gemini');
+      const provider = await createProvider('gemini');
 
       const prompt = `You are a semantic search expert. Given a list of MCP servers and a search query, return ONLY the mcpIds of servers that are very likely to be able to satisfy the users request or query.
 Do not include any explanation or other text, just return a JSON array of mcpId strings. If there are no suitable servers, return an empty json array.
@@ -227,8 +227,8 @@ ${JSON.stringify(allServers, null, 2)}`;
           .replace(/[[\](){}"'`]/g, '') // Remove all brackets, braces, quotes
           .replace(/\s+/g, ' ') // Normalize whitespace
           .split(',')
-          .map((id) => id.trim().toLowerCase())
-          .filter((id) => id.length > 0)
+          .map((id: string) => id.trim().toLowerCase())
+          .filter((id: string) => id.length > 0)
       ); // Remove empty entries
 
       // 7. Filter all servers (both marketplace and GitHub) by matching IDs

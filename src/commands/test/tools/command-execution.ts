@@ -9,28 +9,28 @@ import { promisify } from 'util';
 const exec = promisify(childProcess.exec);
 
 /**
- * Create a tool definition for executing vibe-tools commands in the development environment
+ * Create a tool definition for executing laravelgpt commands in the development environment
  *
  * @returns A tool definition for command execution
  */
 export function createCommandExecutionTool(options: { debug: boolean }): ToolDefinition {
   return {
     name: 'execute_command',
-    description: 'Execute a vibe-tools command in the development environment',
+    description: 'Execute a laravelgpt command in the development environment',
     parameters: {
       type: 'object',
       properties: {
         command: {
           type: 'string',
-          description: 'The vibe-tools command to execute',
+          description: 'The laravelgpt command to execute',
         },
       },
       required: ['command'],
     },
     execute: async (args: { command: string }): Promise<ToolExecutionResult> => {
       try {
-        // Replace vibe-tools with pnpm dev to use development code
-        const devCommand = args.command.replace(/^vibe-tools\s/, 'pnpm dev ');
+        // Replace laravelgpt with pnpm dev to use development code
+        const devCommand = args.command.replace(/^laravelgpt\s/, 'pnpm dev ');
 
         if (options.debug) {
           console.log(`\nExecuting command: ${devCommand}`);

@@ -74,7 +74,7 @@ export class GitHubMCPSearch {
     console.log(`Extracting keywords from natural language query: "${query}"`);
 
     try {
-      const provider = createProvider('gemini');
+      const provider = await createProvider('gemini');
 
       const prompt = `Extract ONLY the specific technologies or capabilities mentioned in this query about MCP servers. Do not add any keywords that aren't directly mentioned in the query.
 
@@ -126,18 +126,17 @@ IMPORTANT: Do not include any markdown formatting, code block markers, or other 
           // If that fails, try comma splitting
           keywords = cleanedResponse
             .split(',')
-            .map((k) => {
-              // Clean up quotation marks and extra spaces
+            .map((k: string) => {
               return k.replace(/^["']\s*|\s*["']$/g, '').trim();
             })
-            .filter((k) => k.length > 0);
+            .filter((k: string) => k.length > 0);
         }
 
         if (keywords.length > 0) {
           console.log(`Extracted ${keywords.length} keywords: ${keywords.join(', ')}`);
 
           // Ensure keywords are in the preferred format
-          const formattedKeywords = keywords.map((k) => {
+          const formattedKeywords = keywords.map((k: string) => {
             if (!k) return 'mcp'; // Handle empty strings
 
             const keyword = k.toLowerCase().trim();

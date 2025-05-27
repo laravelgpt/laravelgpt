@@ -56,7 +56,7 @@ export async function fetchDocContent(url: string, debug: boolean): Promise<stri
 
         if (debug) {
           // save the extracted text to a file
-          writeFileSync('.vibe-tools-fetched-doc.html', htmlContent);
+          writeFileSync('.laravelgpt-fetched-doc.html', htmlContent);
         }
 
         // Extract text from the HTML content
@@ -69,7 +69,7 @@ export async function fetchDocContent(url: string, debug: boolean): Promise<stri
           );
         }
 
-        const debugFile = '.vibe-tools-fetched-doc.txt';
+        const debugFile = '.laravelgpt-fetched-doc.txt';
         if (debug) {
           // save the extracted text to a file
           writeFileSync(debugFile, extractedText);

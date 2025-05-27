@@ -1,48 +1,42 @@
-# Feature Behavior: Parallel Test Execution
+# Test Command Parallel Example
 
-## Description
-This test verifies that the test command can execute multiple scenarios in parallel, reducing overall test execution time.
+This test demonstrates the parallel execution capabilities of the test command.
 
-## Test Scenarios
+## Test 1: Simple Question
+**Description**: Test asking a simple question.
 
-### Scenario 1: Basic Ask Command (Fast)
-**Task Description:**
-Use vibe-tools to ask a simple question: "What is 2+2?"
+**Command**:
+```bash
+Use laravelgpt to ask a simple question: "What is 2+2?"
+```
 
-**Expected Behavior:**
-- The AI agent should determine the appropriate command to use
-- Response should include the correct answer (4)
-- The command should complete successfully without errors
+**Expected Behavior**:
+- Command successfully answers the question
+- Response is correct and immediate
+- No errors or delays
 
-**Success Criteria:**
-- AI agent correctly uses the vibe-tools ask command with appropriate provider and model
-- Response contains the correct answer
-- Command completes within a reasonable time
+## Test 2: Longer Processing Question
+**Description**: Test asking a question that requires more processing time.
 
-### Scenario 2: Wait Command (Slow)
-**Task Description:**
-Use vibe-tools to ask a question that will take longer to process: "Write a 10-step outline for creating a web application using React, including details on state management, routing, and API integration."
+**Command**:
+```bash
+Use laravelgpt to ask a question that will take longer to process: "Write a 10-step outline for creating a web application using React, including details on state management, routing, and API integration."
+```
 
-**Expected Behavior:**
-- The AI agent should determine the appropriate command to use
-- Response should include a detailed outline with the requested information
-- The command should complete successfully without errors
+**Expected Behavior**:
+- Command successfully processes the longer question
+- Response is comprehensive and well-structured
+- No timeout or performance issues
 
-**Success Criteria:**
-- AI agent correctly uses the vibe-tools ask command with appropriate provider and model
-- Response contains a comprehensive outline with the requested components
-- Command completes successfully, despite taking longer than other scenarios
+## Test 3: Another Simple Question
+**Description**: Test asking another simple question to verify parallel execution.
 
-### Scenario 3: Final Ask Command (Fast)
-**Task Description:**
-Use vibe-tools to ask another simple question: "What is the capital of France?"
+**Command**:
+```bash
+Use laravelgpt to ask another simple question: "What is the capital of France?"
+```
 
-**Expected Behavior:**
-- The AI agent should determine the appropriate command to use
-- Response should include the correct answer (Paris)
-- The command should complete successfully without errors
-
-**Success Criteria:**
-- AI agent correctly uses the vibe-tools ask command with appropriate provider and model
-- Response contains the correct answer
-- Command completes within a reasonable time 
+**Expected Behavior**:
+- Command successfully answers the question
+- Response is correct and immediate
+- No interference from other running commands 

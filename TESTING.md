@@ -1,20 +1,115 @@
-# Feature Behavior Testing with AI Agents
+# Testing Documentation
 
-## Overview
-
-This document outlines our approach to regression testing for vibe-tools using AI agents. We'll create feature behavior files that describe desired behaviors, and AI agents will determine how to test these behaviors using vibe-tools. The agents will generate detailed reports and simple PASS/FAIL results for automated validation.
+This document outlines our approach to regression testing for laravelgpt using AI agents. We'll create feature behavior files that describe desired behaviors, and AI agents will determine how to test these behaviors using laravelgpt. The agents will generate detailed reports and simple PASS/FAIL results for automated validation.
 
 ## Goals
 
-1. **Comprehensive Feature Testing**: Test all major features and commands of vibe-tools in an automated fashion
-2. **Regression Detection**: Quickly identify when changes break existing functionality
-3. **Parallel Execution**: Run tests concurrently to reduce overall testing time
-4. **Documentation**: Generate detailed reports explaining test outcomes and behavior
-5. **Human-Readable Reports**: Ensure test results are easy to understand and analyze
-6. **Automation-Friendly**: Enable CI/CD integration with simple PASS/FAIL outputs
-7. **Maintainability**: Make it easy to add new tests and update existing ones
-8. **Cross-Version Testing**: Compare behavior across different versions/branches
-9. **AI Agent Flexibility**: Test whether AI agents can correctly interpret and use vibe-tools based on natural language descriptions
+1. **Comprehensive Feature Testing**: Test all major features and commands of laravelgpt in an automated fashion
+2. **Natural Language Understanding**: Verify that AI agents can understand and execute natural language descriptions of tasks
+3. **Error Handling**: Test how AI agents handle various error conditions and edge cases
+4. **Performance Validation**: Ensure commands complete within expected timeframes
+5. **Output Formatting**: Verify that command outputs are properly formatted and readable
+6. **Configuration Management**: Test handling of different configuration scenarios
+7. **Provider Integration**: Validate integration with various AI providers
+8. **Resource Management**: Test proper handling of system resources
+9. **AI Agent Flexibility**: Test whether AI agents can correctly interpret and use laravelgpt based on natural language descriptions
+
+## Test Structure
+
+Each test scenario should include:
+- A clear description of what is being tested
+- The exact command to run
+- Expected behavior and success criteria
+- Any necessary setup or prerequisites
+
+## Example Test Scenarios
+
+### Basic Question Test
+**Description**: Test asking a simple question.
+
+**Command**:
+```bash
+Use laravelgpt to ask a question about capitals.
+```
+
+**Expected Behavior**:
+- Command successfully asks question
+- Response is accurate and complete
+- Output is well-formatted
+
+### Long Question Test
+**Description**: Test asking a very long question.
+
+**Command**:
+```bash
+Use laravelgpt to ask a very long question.
+```
+
+**Expected Behavior**:
+- Command successfully handles long question
+- Response is complete and accurate
+- Output is well-formatted
+
+### Model Not Found Test
+**Description**: Test handling non-existent model.
+
+**Command**:
+```bash
+laravelgpt ask --provider openai --model gpt-4 --file=/absolute/path/to/scenario9-long-query.txt
+```
+
+**Expected Behavior**:
+- Command handles non-existent model gracefully
+- Error message is clear and informative
+- No partial or corrupted output
+
+## Test Execution
+
+1. **Instruction Understanding Tests**: Test whether AI agent can correctly interpret and use laravelgpt based on instructions
+
+This approach creates a dedicated testing command within laravelgpt that executes AI agent-based tests.
+
+### Command Structure
+```bash
+laravelgpt test <feature-behavior-file.md> [options]
+```
+
+### Options
+- `--debug`: Enable debug output
+- `--save-to`: Save test results to file
+- `--quiet`: Suppress output
+- `--parallel`: Run tests in parallel
+
+## Test Results
+
+Each test should produce:
+- A PASS/FAIL result
+- Detailed explanation of the test
+- Any error messages or warnings
+- Performance metrics
+
+## Test Implementation
+
+- Self-contained within laravelgpt codebase
+- Direct access to laravelgpt functionality
+- Tests both laravelgpt functionality and AI agent understanding
+
+## Test Development
+
+- Determine the appropriate laravelgpt commands based on task descriptions
+- Use the laravelgpt documentation to understand available commands and options
+
+## Test Status
+
+- ✅ **Test Runner Command Structure**: Implemented the `laravelgpt test` command with all specified options
+- 🔄 **Feature Behavior Files**: Creating test scenarios for core laravelgpt commands
+- 🔄 **AI Agent Integration**: Implementing AI agent-based test execution
+- 🔄 **Test Reporting**: Developing detailed test reports and PASS/FAIL results
+- 🔄 **Parallel Execution**: Adding support for parallel test execution
+- 🔄 **Configuration Management**: Implementing test configuration handling
+- 🔄 **Error Handling**: Adding comprehensive error handling and reporting
+- 🔄 **Performance Testing**: Implementing performance validation
+- 🔄 **Documentation**: Creating comprehensive test documentation
 
 ## Feature Behavior Files
 
@@ -36,8 +131,8 @@ Brief description of the feature and its functionality.
 
 ### Scenario 1: [Brief Scenario Description] (Happy Path)
 **Task Description:**
-Describe the task the AI agent should accomplish using vibe-tools, without specifying the exact command.
-For example: "Search the web for information about TypeScript using vibe-tools."
+Describe the task the AI agent should accomplish using laravelgpt, without specifying the exact command.
+For example: "Search the web for information about TypeScript using laravelgpt."
 
 **Expected Behavior:**
 - The AI agent should determine the appropriate command(s) to use
@@ -45,7 +140,7 @@ For example: "Search the web for information about TypeScript using vibe-tools."
 - The command should complete successfully without errors
 
 **Success Criteria:**
-- AI agent correctly identifies and uses the appropriate vibe-tools command(s)
+- AI agent correctly identifies and uses the appropriate laravelgpt command(s)
 - Response contains relevant information about the requested topic
 - No unexpected error messages are displayed
 - Command completes within a reasonable time
@@ -93,7 +188,7 @@ Use double square brackets with the `asset:` prefix to indicate that the asset c
 Example:
 ```markdown
 **Task Description:**
-Use vibe-tools to ask a question about capitals.
+Use laravelgpt to ask a question about capitals.
 
 The agent should use this query: [[asset:simple-query]]
 ```
@@ -105,7 +200,7 @@ Use double curly braces with the `path:` prefix to indicate that only the absolu
 Example:
 ```markdown
 **Task Description:**
-Use vibe-tools to ask a very long question.
+Use laravelgpt to ask a very long question.
 
 The agent should use the query stored in this file: {{path:scenario9-long-query.txt}}
 ```
@@ -132,7 +227,7 @@ For the "Extremely Long Query" scenario in the ask-command tests:
 2. Reference this asset in the scenario using path reference:
    ```markdown
    **Task Description:**
-   Use vibe-tools to ask a very long question (over 500 characters).
+   Use laravelgpt to ask a very long question (over 500 characters).
    
    Use the query from this file: {{path:scenario9-long-query.txt}}
    ```
@@ -140,7 +235,7 @@ For the "Extremely Long Query" scenario in the ask-command tests:
 3. The test runner will resolve this to an absolute path
 4. The AI agent can then use this path in its command, e.g.:
    ```bash
-   vibe-tools ask --provider openai --model gpt-4 --file=/absolute/path/to/scenario9-long-query.txt
+   laravelgpt ask --provider openai --model gpt-4 --file=/absolute/path/to/scenario9-long-query.txt
    ```
 
 This approach ensures:
@@ -156,17 +251,17 @@ Each feature behavior file should include scenarios from these categories:
 1. **Positive Tests (Happy Path)**: Verify expected behavior under normal conditions
 2. **Negative Tests (Error Handling)**: Verify correct error handling and informative error messages
 3. **Boundary/Edge Cases**: Test limits, specific & unusual inputs, and edge conditions
-4. **Instruction Understanding Tests**: Test whether AI agent can correctly interpret and use vibe-tools based on instructions
+4. **Instruction Understanding Tests**: Test whether AI agent can correctly interpret and use laravelgpt based on instructions
 
 ## Implementation: CLI-Based Testing Framework
 
-This approach creates a dedicated testing command within vibe-tools that executes AI agent-based tests.
+This approach creates a dedicated testing command within laravelgpt that executes AI agent-based tests.
 
 ### Implementation Details:
 
 1. **Test Runner Command**:
    ```
-   vibe-tools test <feature-behavior-file.md> [options]
+   laravelgpt test <feature-behavior-file.md> [options]
    ```
 
 2. **Options**:
@@ -185,7 +280,7 @@ This approach creates a dedicated testing command within vibe-tools that execute
 3. **Test Execution**:
    - Parse feature behavior file into structured test scenarios
    - Initialize AI agent with appropriate context and cursorrules
-   - Instruct the AI agent to accomplish the described tasks using vibe-tools
+   - Instruct the AI agent to accomplish the described tasks using laravelgpt
    - Allow the AI agent to determine which commands to use based on the task description
    - Generate detailed report and PASS/FAIL result
    - Store reports in specified output directory with branch name in filename
@@ -220,7 +315,7 @@ This approach creates a dedicated testing command within vibe-tools that execute
    - Include execution time summary showing total time and time per scenario
    - Provide error summaries for quick identification of issues
    - Use distinct visual markers (✅, ❌) for PASS/FAIL status
-   - Include the exact vibe-tools commands generated by the AI agent
+   - Include the exact laravelgpt commands generated by the AI agent
    - Generate separate PASS/FAIL result files in a structured format (JSON)
    - Implement semantic comparison for AI-generated outputs:
      - Use Gemini for semantic understanding of outputs
@@ -246,11 +341,11 @@ This approach creates a dedicated testing command within vibe-tools that execute
    - **Tagging System**: Allow adding tags to scenarios for more granular test selection and execution
 
 ### Advantages:
-- Self-contained within vibe-tools codebase
-- Direct access to vibe-tools functionality
+- Self-contained within laravelgpt codebase
+- Direct access to laravelgpt functionality
 - No external dependencies for test execution
 - Easy integration with CI/CD pipelines
-- Tests both vibe-tools functionality and AI agent understanding
+- Tests both laravelgpt functionality and AI agent understanding
 - Faster implementation path for initial testing capabilities
 
 ## Implementation Plan
@@ -308,7 +403,7 @@ This approach creates a dedicated testing command within vibe-tools that execute
 ## Current Progress
 
 ### Completed Items (Phase 1)
-- ✅ **Test Runner Command Structure**: Implemented the `vibe-tools test` command with all specified options
+- ✅ **Test Runner Command Structure**: Implemented the `laravelgpt test` command with all specified options
 - ✅ **Feature Behavior File Parser**: Created a robust parser that extracts scenarios, task descriptions, expected behaviors, and success criteria
 - ✅ **Test Execution Flow**: Implemented the core logic for executing test scenarios using AI agents
 - ✅ **Report Generation**: Created a detailed Markdown report structure with all the required information
@@ -334,7 +429,7 @@ This approach creates a dedicated testing command within vibe-tools that execute
   - Type definitions in `src/commands/test/types.ts`
 
 ### In Progress (Phase 2)
-- 🔄 **Feature Behavior Files**: Creating test scenarios for core vibe-tools commands
+- 🔄 **Feature Behavior Files**: Creating test scenarios for core laravelgpt commands
 - 🔄 **Test Asset Management**: Implementing support for test assets and references
 - 🔄 **Environment Management**: Working on test environment isolation
 
@@ -365,8 +460,8 @@ This approach creates a dedicated testing command within vibe-tools that execute
 To ensure reliable and consistent test results, AI agents should follow these guidelines:
 
 1. **Flexible Command Selection**:
-   - Determine the appropriate vibe-tools commands based on task descriptions
-   - Use the vibe-tools documentation to understand available commands and options
+   - Determine the appropriate laravelgpt commands based on task descriptions
+   - Use the laravelgpt documentation to understand available commands and options
    - Select the most appropriate command(s) for the given task
    - Understand when to use command aliases or nicknames (e.g., "Perplexity" for web search)
 

@@ -7,7 +7,7 @@ import {
   checkFileForVibeTag,
   updateProjectRulesFile,
   getConfiguredIde,
-} from './vibe-rules';
+} from './laravelgpt-rules';
 import { checkPackageVersion, getCurrentVersion } from './utils/versionUtils';
 import type { CommandOptions, Provider } from './types';
 import { reasoningEffortSchema } from './types';
@@ -131,7 +131,7 @@ interface CLIOptions {
 
   // YouTube options
   type?: string;
-  format?: string;
+  format?: 'markdown' | 'json' | 'html' | undefined;
 
   // Test options
   parallel?: number;
@@ -213,8 +213,8 @@ async function performRulesCheck(): Promise<{ ide: string; path: string; reason:
   const targetDir = process.cwd();
   const filesToUpdate: { ide: string; path: string; reason: string }[] = [];
 
-  // Get the IDE configured in vibe-tools config (local or global)
-  const configuredIde = getConfiguredIde(targetDir); // <-- Get configured IDE
+  // Get the IDE configured in laravelgpt config (local or global)
+  const configuredIde = getConfiguredIde(targetDir);
 
   // Define potential IDE integrations and their properties
   const potentialIntegrations = [
@@ -228,7 +228,7 @@ async function performRulesCheck(): Promise<{ ide: string; path: string; reason:
   // If no IDE is configured, we can't reliably check rules this way.
   // The install command should handle initial setup.
   if (!configuredIde) {
-    // consola.debug('No IDE configured in vibe-tools.config.json, skipping automatic rule check.');
+    consola.debug('No IDE configured in laravelgpt.config.json, skipping automatic rule check.');
     return filesToUpdate; // Return empty list
   }
 
@@ -237,7 +237,7 @@ async function performRulesCheck(): Promise<{ ide: string; path: string; reason:
 
   // If the configured IDE isn't one we know how to check, exit
   if (!currentIntegration) {
-    // consola.debug(`Configured IDE '${configuredIde}' not recognized for rule check.`);
+    consola.debug(`Configured IDE '${configuredIde}' not recognized for rule check.`);
     return filesToUpdate;
   }
 
@@ -291,7 +291,7 @@ async function main() {
         console.error('Error: Could not determine package version using versionUtils.');
         process.exit(1);
       }
-      console.log(`vibe-tools version ${currentVersion}`);
+      console.log(`laravelgpt version ${currentVersion}`);
       process.exit(0);
     } catch (error) {
       console.error(
@@ -449,6 +449,8 @@ async function main() {
             options.withDoc = [];
           }
           options.withDoc.push(value);
+        } else if (stringOptionKey === 'format') {
+          options[stringOptionKey] = value as 'json' | 'html' | 'markdown' | undefined;
         } else {
           options[stringOptionKey] = value;
         }
@@ -506,25 +508,25 @@ async function main() {
       switch (selectedPackageManager) {
         case 'yarn':
           pmCommand = 'yarn';
-          pmArgs = ['global', 'add', 'vibe-tools@latest'];
+          pmArgs = ['global', 'add', 'laravelgpt@latest'];
           break;
         case 'pnpm':
           pmCommand = 'pnpm';
-          pmArgs = ['add', '-g', 'vibe-tools@latest'];
+          pmArgs = ['add', '-g', 'laravelgpt@latest'];
           break;
         case 'bun':
           pmCommand = 'bun';
-          pmArgs = ['i', '-g', 'vibe-tools@latest'];
+          pmArgs = ['i', '-g', 'laravelgpt@latest'];
           break;
         case 'npm':
         default:
           pmCommand = 'npm';
-          pmArgs = ['i', '-g', 'vibe-tools@latest'];
+          pmArgs = ['i', '-g', 'laravelgpt@latest'];
           break;
       }
 
       consola.info(
-        `Updating vibe-tools to v${versionInfo.latest} using ${selectedPackageManager}...`
+        `Updating laravelgpt to v${versionInfo.latest} using ${selectedPackageManager}...`
       );
       shouldContinueExecution = false; // Don't execute original command yet
 
@@ -535,7 +537,7 @@ async function main() {
 
       updateProcess.on('close', async (code) => {
         if (code === 0) {
-          consola.success(`Successfully updated vibe-tools to v${versionInfo.latest}.`);
+          consola.success(`Successfully updated laravelgpt to v${versionInfo.latest}.`);
 
           // --- MOVED Rules Check / Auto Update START ---
           // We run this *after* the update succeeds
@@ -574,14 +576,14 @@ async function main() {
           // Special handling for 'install' command
           if (command === 'install') {
             // Adjusted prompt message since we removed the automatic update attempt
-            const promptText = `vibe-tools update complete. Still proceed with install (config setup, etc.)?`;
+            const promptText = `laravelgpt update complete. Still proceed with install (config setup, etc.)?`;
             const proceedWithInstall = await consola.prompt(promptText, {
               type: 'confirm',
               initial: false, // Default to not re-running install actions
             });
             if (proceedWithInstall) {
               consola.info('Proceeding with original install command...');
-              const rerunProcess = spawn('vibe-tools', originalArgs, {
+              const rerunProcess = spawn('laravelgpt', originalArgs, {
                 stdio: 'inherit',
                 shell: true,
               });
@@ -597,7 +599,7 @@ async function main() {
           } else {
             // Re-run the original command for non-install commands
             consola.info('Re-running original command...');
-            const rerunProcess = spawn('vibe-tools', originalArgs, {
+            const rerunProcess = spawn('laravelgpt', originalArgs, {
               stdio: 'inherit',
               shell: true,
             });
@@ -608,7 +610,7 @@ async function main() {
             });
           }
         } else {
-          consola.error(`Failed to update vibe-tools (exit code: ${code}).`);
+          consola.error(`Failed to update laravelgpt (exit code: ${code}).`);
           consola.warn('Continuing with the current version...');
           shouldContinueExecution = true; // Allow original command to run
         }
@@ -621,7 +623,7 @@ async function main() {
       });
     }
   } catch (error) {
-    consola.warn('Could not check for vibe-tools updates:', error);
+    consola.warn('Could not check for laravelgpt updates:', error);
     // Continue execution even if update check fails
   }
   // --- End Update Check Block ---

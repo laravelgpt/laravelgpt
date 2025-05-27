@@ -13,7 +13,7 @@ const execAsync = util.promisify(child_process.exec);
 const WHITELISTED_COMMANDS = ['ls', 'cat', 'grep', 'find', 'pwd', 'sqlite3', 'test'];
 
 /**
- * Creates a tool for executing vibe-tools commands in an isolated environment.
+ * Creates a tool for executing laravelgpt commands in an isolated environment.
  */
 export function createCommandExecutionTool(options: {
   debug: boolean;
@@ -27,13 +27,13 @@ export function createCommandExecutionTool(options: {
 
   return {
     name: 'execute_command',
-    description: 'Execute a vibe-tools command',
+    description: 'Execute a laravelgpt command',
     parameters: {
       type: 'object',
       properties: {
         command: {
           type: 'string',
-          description: 'The vibe-tools command to execute',
+          description: 'The laravelgpt command to execute',
         },
       },
       required: ['command'],
@@ -59,8 +59,8 @@ export function createCommandExecutionTool(options: {
           },
         };
       }
-      // Extract environment variables and vibe-tools command
-      const envVarRegex = /^(?:(?:[A-Z_][A-Z0-9_]*=[^\s]*\s+)*)?(?=vibe-tools|$)/i;
+      // Extract environment variables and laravelgpt command
+      const envVarRegex = /^(?:(?:[A-Z_][A-Z0-9_]*=[^\s]*\s+)*)?(?=laravelgpt|$)/i;
       const envMatch = command.match(envVarRegex);
       const envVars: Record<string, string> = {};
 
@@ -76,8 +76,8 @@ export function createCommandExecutionTool(options: {
       // Extract the actual command and arguments
       const commandPart = command.slice(envMatch ? envMatch[0].length : 0);
 
-      // Check if it's a vibe-tools command
-      const cursorToolsMatch = commandPart.match(/^vibe-tools\s+([^\s]+)(.*)$/);
+      // Check if it's a laravelgpt command
+      const cursorToolsMatch = commandPart.match(/^laravelgpt\s+([^\s]+)(.*)$/);
 
       // Check if it's a whitelisted shell command
       const shellCommandMatch = commandPart.match(/^([^\s]+)(.*)$/);
@@ -86,7 +86,7 @@ export function createCommandExecutionTool(options: {
       const workingDir = cwd || process.cwd();
 
       if (cursorToolsMatch) {
-        // Handle vibe-tools command
+        // Handle laravelgpt command
         const [, subCommand, args] = cursorToolsMatch;
         return await executeCursorToolsCommand(subCommand, args, envVars, workingDir);
       } else if (shellCommandMatch) {
@@ -98,7 +98,7 @@ export function createCommandExecutionTool(options: {
           return await executeShellCommand(shellCommand, shellArgs, envVars, workingDir);
         } else {
           // Not a whitelisted command
-          const errorMessage = `Command '${shellCommand}' is not allowed. Permitted commands are: vibe-tools and [${WHITELISTED_COMMANDS.join(', ')}]`;
+          const errorMessage = `Command '${shellCommand}' is not allowed. Permitted commands are: laravelgpt and [${WHITELISTED_COMMANDS.join(', ')}]`;
           console.error(errorMessage);
           return {
             success: false,
@@ -107,14 +107,14 @@ export function createCommandExecutionTool(options: {
               message: 'Command not allowed',
               details: {
                 command: shellCommand,
-                allowedCommands: ['vibe-tools', ...WHITELISTED_COMMANDS],
+                allowedCommands: ['laravelgpt', ...WHITELISTED_COMMANDS],
               },
             },
           };
         }
       } else {
         // No valid command found
-        const errorMessage = `Invalid command format. Expected: [ENV_VARS] vibe-tools <command> [options] or one of the whitelisted commands: [${WHITELISTED_COMMANDS.join(', ')}]`;
+        const errorMessage = `Invalid command format. Expected: [ENV_VARS] laravelgpt <command> [options] or one of the whitelisted commands: [${WHITELISTED_COMMANDS.join(', ')}]`;
         console.error(errorMessage, command);
         return {
           success: false,
@@ -125,7 +125,7 @@ export function createCommandExecutionTool(options: {
         };
       }
 
-      // Helper function to execute vibe-tools commands
+      // Helper function to execute laravelgpt commands
       async function executeCursorToolsCommand(
         subCommand: string,
         args: string,

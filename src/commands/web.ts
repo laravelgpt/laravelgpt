@@ -84,7 +84,7 @@ export class WebCommand implements Command {
     query: string,
     options: CommandOptions
   ): CommandGenerator {
-    const modelProvider = createProvider(provider);
+    const modelProvider = await createProvider(provider);
     let model =
       options?.model ||
       this.config.web?.model ||

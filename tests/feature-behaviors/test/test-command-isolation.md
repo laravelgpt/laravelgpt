@@ -1,8 +1,20 @@
-# Feature Behavior: Test isolation
+# Test Command Isolation
 
-## Description
-This test verifies that tests are run in an isolated folder
+We're going to verify that laravelgpt test commands run in an isolated folder. You are inside a test so all you need to do is use ls to figure out if you're in a suitably isolated folder.
 
+## Test 1: Environment Isolation
+**Description**: Verify that test commands run in an isolated folder.
+
+**Command**:
+```bash
+We're going to verify that laravelgpt test commands run in an isolated folder. You are inside a test so all you need to do is use ls to figure out if you're in a suitably isolated folder.
+```
+
+**Expected Behavior**:
+- Command runs in an isolated directory
+- No access to parent directory files
+- Clean environment for each test
+- No interference between tests
 
 ### Scenario 1: Test commands run in an isolated folder
 **Task Description:**

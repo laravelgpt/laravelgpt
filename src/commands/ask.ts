@@ -21,7 +21,7 @@ export class AskCommand implements Command {
     // If no providers are available, throw an error
     if (availableProviders.length === 0) {
       throw new ProviderError(
-        "No AI providers are currently available. Please run 'vibe-tools install' to set up your API keys."
+        "No AI providers are currently available. Please run 'laravelgpt install' to set up your API keys."
       );
     }
 
@@ -64,7 +64,7 @@ export class AskCommand implements Command {
     }
 
     // Create the provider instance
-    const provider = createProvider(providerName);
+    const provider = await createProvider(providerName);
     const maxTokens = options?.maxTokens || defaultMaxTokens;
 
     let finalQuery = query;
@@ -131,12 +131,12 @@ export class AskCommand implements Command {
         webSearch: options?.webSearch,
       };
 
-      // Execute the prompt with the provider using the potentially modified query
+      // Execute the prompt
       answer = await provider.executePrompt(finalQuery, modelOptions);
 
       // Track token count if provider returns it
-      if ('tokenUsage' in provider && provider.tokenUsage) {
-        const { promptTokens, completionTokens } = provider.tokenUsage;
+      const { promptTokens, completionTokens } = provider.tokenUsage || {};
+      if (promptTokens && completionTokens) {
         options?.debug &&
           console.log(
             `[AskCommand] Attempting to track telemetry with promptTokens: ${promptTokens}, completionTokens: ${completionTokens}`

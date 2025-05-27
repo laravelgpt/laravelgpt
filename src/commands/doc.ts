@@ -1,10 +1,10 @@
 import type { Command, CommandGenerator, CommandOptions, Config, Provider } from '../types';
 import { defaultMaxTokens, loadConfig, loadEnv } from '../config';
 import { pack } from 'repomix';
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { ApiKeyMissingError, CursorToolsError, FileError, ProviderError } from '../errors';
 import type { ModelOptions, BaseModelProvider } from '../providers/base';
-import { createProvider } from '../providers/base';
+import { createProvider } from '../utils/providerAvailability';
 import { ModelNotFoundError } from '../errors';
 import { loadFileConfigWithOverrides } from '../repomix/repomixConfig';
 import {
@@ -19,8 +19,14 @@ import {
 import { getGithubRepoContext, looksLikeGithubRepo, parseGithubUrl } from '../utils/githubRepo';
 import { fetchDocContent } from '../utils/fetch-doc.ts';
 
+// Supported output formats
+type OutputFormat = 'markdown' | 'json' | 'html';
+
 export class DocCommand implements Command {
   private config: Config;
+  private readonly SUPPORTED_FORMATS: OutputFormat[] = ['markdown', 'json', 'html'];
+  private readonly EMPTY_REPO_THRESHOLD = 50; // Token count threshold for empty repo
+  private readonly LARGE_REPO_THRESHOLD = 200_000; // Token count threshold for large repo
 
   constructor() {
     loadEnv();
@@ -30,6 +36,13 @@ export class DocCommand implements Command {
   async *execute(query: string, options: CommandOptions): CommandGenerator {
     try {
       console.error('Generating repository documentation...\n');
+
+      // Validate format parameter if provided
+      if (options?.format && !this.SUPPORTED_FORMATS.includes(options.format as OutputFormat)) {
+        throw new Error(
+          `Unsupported format: ${options.format}. Supported formats are: ${this.SUPPORTED_FORMATS.join(', ')}`
+        );
+      }
 
       // Handle query as GitHub repo if it looks like one and --from-github is not set
       if (query && !options?.fromGithub && looksLikeGithubRepo(query)) {
@@ -128,27 +141,42 @@ export class DocCommand implements Command {
         }
       }
 
-      if (repoContext.tokenCount > 200_000) {
+      // Handle large repositories
+      if (repoContext.tokenCount > this.LARGE_REPO_THRESHOLD) {
         options = { ...options, tokenCount: repoContext.tokenCount };
+        yield `\n⚠️ Notice: This is a large repository (${repoContext.tokenCount} tokens). Processing may take longer than usual.\n`;
       }
 
-      const isEmptyRepo = repoContext.text.trim() === '' || repoContext.tokenCount < 50;
+      // Handle empty repositories
+      const isEmptyRepo = repoContext.text.trim() === '' || repoContext.tokenCount < this.EMPTY_REPO_THRESHOLD;
       if (isEmptyRepo) {
         console.error('Repository appears to be empty or contains minimal code.');
         yield '\n\n\u2139\uFE0F Repository Notice: This repository appears to be empty or contains minimal code.\n';
         yield 'Basic structure documentation:\n';
 
+        let basicDoc = '';
         if (options?.fromGithub) {
           const { username, reponame } = parseGithubUrl(options.fromGithub);
-          yield `Repository: ${username}/${reponame}\n`;
-          yield 'Status: Empty or minimal content\n';
+          basicDoc = `Repository: ${username}/${reponame}\n`;
+          basicDoc += 'Status: Empty or minimal content\n';
         } else {
           const currentDir = process.cwd().split('/').pop() || 'current directory';
-          yield `Repository: ${currentDir}\n`;
-          yield 'Status: Empty or minimal content\n';
+          basicDoc = `Repository: ${currentDir}\n`;
+          basicDoc += 'Status: Empty or minimal content\n';
         }
 
-        yield '\nRecommendation: Add more code files to generate comprehensive documentation.\n';
+        basicDoc += '\nRecommendation: Add more code files to generate comprehensive documentation.\n';
+
+        // Format the output based on the requested format
+        const formattedOutput = this.formatOutput(basicDoc, options?.format as OutputFormat);
+        
+        // Save to file if output path is specified
+        if (options?.output) {
+          writeFileSync(options.output, formattedOutput);
+          yield `\nDocumentation saved to ${options.output}\n`;
+        }
+
+        yield formattedOutput;
         return;
       }
 
@@ -211,8 +239,8 @@ export class DocCommand implements Command {
         yield `\n❌ Error: ${errorMessage}\n`;
 
         if (error instanceof ApiKeyMissingError) {
-          yield `\nPlease set up the required API keys in your ~/.vibe-tools/.env file.\n`;
-          yield `For more information, visit: https://github.com/cursor-ai/vibe-tools#api-keys\n`;
+          yield `\nPlease set up the required API keys in your ~/.laravelgpt/.env file.\n`;
+          yield `For more information, visit: https://github.com/cursor-ai/laravelgpt#api-keys\n`;
         }
       } else if (error instanceof Error) {
         console.error('Error in doc command:', error.message);
@@ -248,7 +276,7 @@ export class DocCommand implements Command {
     if (!hasAvailableProvider) {
       throw new ProviderError(
         `No available providers for doc command`,
-        `Run vibe-tools install and provide an API key for one of these providers: ${docProviders.join(', ')}`
+        `Run laravelgpt install and provide an API key for one of these providers: ${docProviders.join(', ')}`
       );
     }
   }
@@ -307,7 +335,60 @@ export class DocCommand implements Command {
       });
     }
 
-    yield documentation;
+    // Format the output based on the requested format
+    const formattedOutput = this.formatOutput(documentation, options?.format as OutputFormat);
+    
+    // Save to file if output path is specified
+    if (options?.output) {
+      writeFileSync(options.output, formattedOutput);
+      yield `\nDocumentation saved to ${options.output}\n`;
+    }
+
+    yield formattedOutput;
+  }
+
+  private formatOutput(content: string, format?: OutputFormat): string {
+    if (!format || format === 'markdown') {
+      return content;
+    }
+
+    switch (format) {
+      case 'json':
+        return JSON.stringify({ documentation: content }, null, 2);
+      case 'html':
+        return `<!DOCTYPE html>
+<html>
+<head>
+  <title>Repository Documentation</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+    pre { background-color: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto; }
+    code { font-family: 'Courier New', Courier, monospace; }
+  </style>
+</head>
+<body>
+  ${content
+    .split('\n')
+    .map((line) => {
+      if (line.startsWith('#')) {
+        const level = line.match(/^#+/)?.[0].length || 1;
+        const text = line.replace(/^#+\s*/, '');
+        return `<h${level}>${text}</h${level}>`;
+      }
+      if (line.startsWith('```')) {
+        return '<pre><code>';
+      }
+      if (line.startsWith('    ')) {
+        return `<pre><code>${line.slice(4)}</code></pre>`;
+      }
+      return `<p>${line}</p>`;
+    })
+    .join('\n')}
+</body>
+</html>`;
+      default:
+        return content;
+    }
   }
 }
 

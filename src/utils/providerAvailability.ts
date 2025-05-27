@@ -1,4 +1,12 @@
 import type { Provider } from '../types';
+import { BaseModelProvider } from '../providers/base';
+import { GeminiProvider } from '../providers/gemini';
+import { OpenAIProvider } from '../providers/openai';
+import { OpenRouterProvider } from '../providers/openrouter';
+import { PerplexityProvider } from '../providers/perplexity';
+import { ModelBoxProvider } from '../providers/modelbox';
+import { AnthropicProvider } from '../providers/anthropic';
+import { XAIProvider } from '../providers/xai';
 
 interface ProviderInfo {
   provider: Provider;
@@ -110,4 +118,25 @@ export function getNextAvailableProvider(
   }
 
   return undefined;
+}
+
+export function createProvider(provider: Provider): BaseModelProvider {
+  switch (provider) {
+    case 'gemini':
+      return new GeminiProvider();
+    case 'openai':
+      return new OpenAIProvider();
+    case 'openrouter':
+      return new OpenRouterProvider();
+    case 'perplexity':
+      return new PerplexityProvider();
+    case 'modelbox':
+      return new ModelBoxProvider();
+    case 'anthropic':
+      return new AnthropicProvider();
+    case 'xai':
+      return new XAIProvider();
+    default:
+      throw new Error(`Unsupported provider: ${provider}`);
+  }
 }

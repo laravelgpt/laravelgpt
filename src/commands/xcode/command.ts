@@ -1,5 +1,5 @@
 /**
- * Entry point for the Xcode command functionality in vibe-tools.
+ * Entry point for the Xcode command functionality in laravelgpt.
  * This file exports the main XcodeCommand instance that handles all Xcode-related operations.
  *
  * The command is designed to be simple and focused, delegating actual functionality

@@ -69,7 +69,7 @@ export function loadStagehandConfig(config: Config): StagehandConfig {
       provider = 'openai';
     } else {
       throw new Error(
-        'Either ANTHROPIC_API_KEY or OPENAI_API_KEY is required for Stagehand. Please set one in your environment or add it to ~/.vibe-tools/.env file.'
+        'Either ANTHROPIC_API_KEY or OPENAI_API_KEY is required for Stagehand. Please set one in your environment or add it to ~/.laravelgpt/.env file.'
       );
     }
   } else {
@@ -77,7 +77,7 @@ export function loadStagehandConfig(config: Config): StagehandConfig {
       case 'anthropic': {
         if (!process.env.ANTHROPIC_API_KEY) {
           throw new Error(
-            'ANTHROPIC_API_KEY is required for when Stagehand is configured to use Anthropic. Please set one in your environment or add it to ~/.vibe-tools/.env file.'
+            'ANTHROPIC_API_KEY is required for when Stagehand is configured to use Anthropic. Please set one in your environment or add it to ~/.laravelgpt/.env file.'
           );
         }
         break;
@@ -85,7 +85,7 @@ export function loadStagehandConfig(config: Config): StagehandConfig {
       case 'openai': {
         if (!process.env.OPENAI_API_KEY) {
           throw new Error(
-            'OPENAI_API_KEY is required for when Stagehand is configured to use OpenAI. Please set one in your environment or add it to ~/.vibe-tools/.env file.'
+            'OPENAI_API_KEY is required for when Stagehand is configured to use OpenAI. Please set one in your environment or add it to ~/.laravelgpt/.env file.'
           );
         }
         break;
@@ -120,7 +120,7 @@ export function validateStagehandConfig(config: StagehandConfig): void {
   if (!process.env[requiredKey]) {
     throw new Error(
       `${requiredKey} is required for Stagehand ${config.provider} provider. ` +
-        `Please set it in your .vibe-tools.env file.`
+        `Please set it in your .laravelgpt.env file.`
     );
   }
 }
@@ -150,7 +150,7 @@ export function getStagehandApiKey(config: StagehandConfig): string {
     throw new Error(
       `API key not found for ${config.provider} provider. ` +
         `Please set ${config.provider === 'anthropic' ? 'ANTHROPIC_API_KEY' : config.provider === 'openai' ? 'OPENAI_API_KEY' : config.provider === 'gemini' ? 'GEMINI_API_KEY' : 'OPENROUTER_API_KEY'} ` +
-        `in your .vibe-tools.env file.`
+        `in your .laravelgpt.env file.`
     );
   }
 
@@ -160,7 +160,7 @@ export function getStagehandApiKey(config: StagehandConfig): string {
 /**
  * Get the Stagehand model to use based on the following precedence:
  * 1. Command line option (--model)
- * 2. Configuration file (vibe-tools.config.json)
+ * 2. Configuration file (laravelgpt.config.json)
  * 3. Default model based on provider (claude-sonnet-4-20250514 for Anthropic, o3-mini for OpenAI)
  *
  * If both command line and config models are invalid, falls back to the default model for the provider.

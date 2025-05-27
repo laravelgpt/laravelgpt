@@ -2,7 +2,7 @@ import type { Command, CommandGenerator, CommandOptions, Provider, Config } from
 import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadEnv } from '../config';
-import { generateRules } from '../vibe-rules';
+import { generateRules } from '../laravelgpt-rules';
 import { consola } from 'consola';
 import { colors } from 'consola/utils';
 import { JsonInstallCommand } from './jsonInstall';
@@ -20,7 +20,7 @@ import {
   clearScreen,
   writeKeysToFile,
   checkLocalDependencies,
-  getVibeToolsLogo,
+  getLaravelGPTLogo,
   collectRequiredProviders,
   parseProviderModel,
   setupClinerules,
@@ -241,10 +241,10 @@ export class InstallCommand implements Command {
       clearScreen();
 
       // Welcome message
-      const logo = getVibeToolsLogo();
+      const logo = getLaravelGPTLogo();
 
       consola.box({
-        title: '🚀 Welcome to Vibe-Tools Setup!',
+        title: '🚀 Welcome to LaravelGPT Setup!',
         titleColor: 'white',
         borderColor: 'green',
         style: {
@@ -272,7 +272,7 @@ export class InstallCommand implements Command {
       // Only prompt if undetermined (null) or explicitly disabled (false)
       if (currentTelemetryStatus === null || currentTelemetryStatus === false) {
         const diagnosticsChoice = await consola.prompt(
-          'Would you like to enable anonymous usage diagnostics to help improve vibe-tools?',
+          'Would you like to enable anonymous usage diagnostics to help improve laravelgpt?',
           {
             type: 'select',
             options: [
@@ -296,14 +296,14 @@ export class InstallCommand implements Command {
           });
           setTelemetryStatus(!!enableAfterDetails); // Set status based on user choice
           consola.info(
-            `Anonymous diagnostics ${enableAfterDetails ? colors.green('enabled') : colors.yellow('disabled')}. You can change this later using the VIBE_TOOLS_NO_TELEMETRY environment variable.\n`
+            `Anonymous diagnostics ${enableAfterDetails ? colors.green('enabled') : colors.yellow('disabled')}. You can change this later using the LARAVELGPT_NO_TELEMETRY environment variable.\n`
           );
         } else {
           // Handle direct yes/no answer
           const enableTelemetry = diagnosticsChoice === 'yes';
           setTelemetryStatus(enableTelemetry); // Set status based on user choice
           consola.info(
-            `Anonymous diagnostics ${enableTelemetry ? colors.green('enabled') : colors.yellow('disabled')}. You can change this later using the VIBE_TOOLS_NO_TELEMETRY environment variable.\n`
+            `Anonymous diagnostics ${enableTelemetry ? colors.green('enabled') : colors.yellow('disabled')}. You can change this later using the LARAVELGPT_NO_TELEMETRY environment variable.\n`
           );
         }
       }
@@ -321,7 +321,7 @@ export class InstallCommand implements Command {
       }
 
       // Ask for IDE preference
-      const selectedIde = await consola.prompt('Which IDE will you be using with vibe-tools?', {
+      const selectedIde = await consola.prompt('Which IDE will you be using with laravelgpt?', {
         type: 'select',
         options: [
           { value: 'cursor', label: 'Cursor', hint: 'recommended' },
@@ -562,7 +562,7 @@ export class InstallCommand implements Command {
           ensureDirectoryExists(rulesDir);
 
           // Write the rules file directly to the new location
-          cursorPath = join(rulesDir, 'vibe-tools.mdc');
+          cursorPath = join(rulesDir, 'laravelgpt.mdc');
           try {
             writeFileSync(cursorPath, generateRules('cursor'));
             consola.success(`Rules written to ${colors.cyan(cursorPath)}`);
@@ -616,21 +616,21 @@ export class InstallCommand implements Command {
           borderStyle: 'rounded',
         },
         message: [
-          `${colors.green('Vibe-Tools has been successfully configured!')}`,
+          `${colors.green('LaravelGPT has been successfully configured!')}`,
           '',
           `📋 Configuration: ${colors.cyan(isLocalConfig ? 'Local' : 'Global')}`,
           `🔧 IDE: ${colors.cyan(selectedIde)}`,
           '',
           `${colors.yellow('Get started with:')}`,
-          `  ${colors.green('vibe-tools repo')} ${colors.white('"Explain this codebase"')}`,
-          `  ${colors.green('vibe-tools web')} ${colors.white('"Search for something online"')}`,
-          `  ${colors.green('vibe-tools plan')} ${colors.white('"Create implementation plan"')}`,
+          `  ${colors.green('laravelgpt repo')} ${colors.white('"Explain this codebase"')}`,
+          `  ${colors.green('laravelgpt web')} ${colors.white('"Search for something online"')}`,
+          `  ${colors.green('laravelgpt plan')} ${colors.white('"Create implementation plan"')}`,
         ].join('\n'),
       });
 
-      consola.success('✨ All done! Vibe-Tools is ready to rock. ✨');
+      consola.success('✨ All done! LaravelGPT is ready to rock. ✨');
       consola.info(
-        `\n${colors.cyan('Tip:')} Ask your AI agent to use vibe-tools web to find out what the latest OpenAI news is.\n`
+        `\n${colors.cyan('Tip:')} Ask your AI agent to use laravelgpt web to find out what the latest OpenAI news is.\n`
       );
     } catch (error) {
       consola.box({
@@ -648,7 +648,7 @@ export class InstallCommand implements Command {
           `• ${colors.cyan('Check if you have appropriate permissions')}`,
           `• ${colors.cyan('Ensure your environment is correctly set up')}`,
           '',
-          `If you need assistance, reach out to the vibe-tools team or try re-running the installation.`,
+          `If you need assistance, reach out to the laravelgpt team or try re-running the installation.`,
         ].join('\n'),
       });
     }

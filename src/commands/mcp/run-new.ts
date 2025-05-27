@@ -96,7 +96,7 @@ export class RunCommand implements Command {
     env: Record<string, string>;
   }> {
     // Use Gemini to generate appropriate arguments
-    const provider = createProvider('gemini');
+    const provider = await createProvider('gemini');
 
     const { readme, ...serverDetails } = server;
     const prompt = `You are an expert engineer. Your job is to create json configurations for running MCP servers based on the README of the given mcp server, and the user query.

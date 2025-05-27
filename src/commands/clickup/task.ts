@@ -30,7 +30,7 @@ export class TaskCommand implements Command {
     const taskId = query.trim();
 
     if (!taskId) {
-      yield 'Please specify a task ID (e.g., vibe-tools clickup task "task_id")';
+      yield 'Please specify a task ID (e.g., laravelgpt clickup task "task_id")';
       return;
     }
 

@@ -341,6 +341,7 @@ export async function processFeatureFile(
         const scenarioOutputBuffer: string[] = [];
 
         try {
+          const provider = await createGeminiProviderFactory()();
           const scenarioResult = await executeScenario(
             scenario,
             {
@@ -353,7 +354,7 @@ export async function processFeatureFile(
               scenarioId,
               outputBuffer: scenarioOutputBuffer,
             },
-            createGeminiProviderFactory()()
+            provider
           );
 
           scenarioResult.outputBuffer = scenarioOutputBuffer;

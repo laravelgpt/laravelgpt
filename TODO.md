@@ -1,4 +1,4 @@
-# vibe-tools Documentation Command Issues and Next Steps
+# laravelgpt Documentation Command Issues and Next Steps
 
 ## Current Issues
 

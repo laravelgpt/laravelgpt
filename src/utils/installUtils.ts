@@ -19,17 +19,18 @@ export const VIBE_COLORS = {
 };
 
 // Define directory paths
-export const VIBE_HOME_DIR = join(homedir(), '.vibe-tools');
+export const VIBE_HOME_DIR = join(homedir(), '.laravelgpt');
 export const VIBE_HOME_ENV_PATH = join(VIBE_HOME_DIR, '.env');
 export const VIBE_HOME_CONFIG_PATH = join(VIBE_HOME_DIR, 'config.json');
 export const CLAUDE_HOME_DIR = join(homedir(), '.claude'); // Global Claude directory
 export const CODEX_HOME_DIR = join(homedir(), '.codex'); // Global Codex directory
 export const CODEX_GLOBAL_INSTRUCTIONS_PATH = join(CODEX_HOME_DIR, 'instructions.md'); // Global Codex instructions file
 export const CODEX_LOCAL_INSTRUCTIONS_FILENAME = 'codex.md'; // Local Codex instructions filename
-export const LOCAL_ENV_PATH = join(process.cwd(), '.vibe-tools.env'); // Keep local path definition separate
-export const LOCAL_CONFIG_PATH = join(process.cwd(), 'vibe-tools.config.json'); // Keep local path definition separate
+export const LARAVELGPT_HOME_DIR = join(homedir(), '.laravelgpt');
+export const LOCAL_ENV_PATH = join(process.cwd(), '.laravelgpt.env'); // Keep local path definition separate
+export const LOCAL_CONFIG_PATH = join(process.cwd(), 'laravelgpt.config.json'); // Keep local path definition separate
 
-// Valid providers that vibe-tools supports
+// Valid providers that laravelgpt supports
 // Note: The case here is important as it's used to normalize user input to the expected format
 export const VALID_PROVIDERS = [
   'Openrouter',
@@ -42,14 +43,14 @@ export const VALID_PROVIDERS = [
 ];
 export const VALID_PROVIDERS_LOWERCASE = VALID_PROVIDERS.map((p) => p.toLowerCase());
 
-// Helper function to update or add vibe-tools section in IDE rules files
+// Helper function to update or add laravelgpt section in IDE rules files
 export function updateRulesSection(filePath: string, rulesTemplate: string): void {
   // Check if file exists and read its content
   let existingContent = existsSync(filePath) ? readFileSync(filePath, 'utf-8') : '';
 
-  // Replace existing vibe-tools section or append if not found
-  const startTag = '<vibe-tools Integration>';
-  const endTag = '</vibe-tools Integration>';
+  // Replace existing laravelgpt section or append if not found
+  const startTag = '<laravelgpt Integration>';
+  const endTag = '</laravelgpt Integration>';
   const startIndex = existingContent.indexOf(startTag);
   const endIndex = existingContent.indexOf(endTag);
 
@@ -132,7 +133,7 @@ export function writeKeysToFile(filePath: string, keys: Record<string, string>):
   writeFileSync(filePath, envContent, 'utf-8');
 }
 
-// Helper function to check for local vibe-tools dependencies
+// Helper function to check for local laravelgpt dependencies
 export async function checkLocalDependencies(targetPath: string): Promise<string | null> {
   const packageJsonPath = join(targetPath, 'package.json');
   if (!existsSync(packageJsonPath)) {
@@ -144,8 +145,8 @@ export async function checkLocalDependencies(targetPath: string): Promise<string
     const dependencies = packageJson.dependencies || {};
     const devDependencies = packageJson.devDependencies || {};
 
-    if (dependencies['vibe-tools'] || devDependencies['vibe-tools']) {
-      return `Warning: Found local vibe-tools dependency in package.json. Since vibe-tools is now designed for global installation only, please remove it from your package.json dependencies and run 'npm uninstall vibe-tools', 'pnpm uninstall vibe-tools', or 'yarn remove vibe-tools' to clean up any local installation.\n`;
+    if (dependencies['laravelgpt'] || devDependencies['laravelgpt']) {
+      return `Warning: Found local laravelgpt dependency in package.json. Since laravelgpt is now designed for global installation only, please remove it from your package.json dependencies and run 'npm uninstall laravelgpt', 'pnpm uninstall laravelgpt', or 'yarn remove laravelgpt' to clean up any local installation.\n`;
     }
   } catch (error) {
     console.error('Error reading package.json:', error);
@@ -153,18 +154,16 @@ export async function checkLocalDependencies(targetPath: string): Promise<string
   return null;
 }
 
-// Generate the vibe-tools logo ASCII art
-export function getVibeToolsLogo(): string {
-  return [
-    VIBE_COLORS.main('██╗   ██╗██╗██████╗ ███████╗   ████████╗ ██████╗  ██████╗ ██╗     ███████╗'),
-    VIBE_COLORS.main('██║   ██║██║██╔══██╗██╔════╝   ╚══██╔══╝██╔═══██╗██╔═══██╗██║     ██╔════╝'),
-    VIBE_COLORS.main('██║   ██║██║██████╔╝█████╗        ██║   ██║   ██║██║   ██║██║     ███████╗'),
-    VIBE_COLORS.main('╚██╗ ██╔╝██║██╔══██╗██╔══╝        ██║   ██║   ██║██║   ██║██║     ╚════██║'),
-    VIBE_COLORS.main(' ╚████╔╝ ██║██████╔╝███████╗      ██║   ╚██████╔╝╚██████╔╝███████╗███████║'),
-    VIBE_COLORS.main('  ╚═══╝  ╚═╝╚═════╝ ╚══════╝      ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝╚══════╝'),
-    '',
-    VIBE_COLORS.main('                        https://vibe-tools.com'),
-  ].join('\n');
+// Generate the laravelgpt logo ASCII art
+export function getLaravelGPTLogo(): string {
+  return `
+  ██╗      █████╗ ██████╗  █████╗ ██╗   ██╗███████╗██╗      ██████╗ ███████╗██████╗ ████████╗
+  ██║     ██╔══██╗██╔══██╗██╔══██╗██║   ██║██╔════╝██║     ██╔═══██╗██╔════╝██╔══██╗╚══██╔══╝
+  ██║     ███████║██████╔╝███████║██║   ██║█████╗  ██║     ██║   ██║█████╗  ██████╔╝   ██║   
+  ██║     ██╔══██║██╔══██╗██╔══██║╚██╗ ██╔╝██╔══╝  ██║     ██║   ██║██╔══╝  ██╔═══╝    ██║   
+  ███████╗██║  ██║██║  ██║██║  ██║ ╚████╔╝ ███████╗███████╗╚██████╔╝███████╗██║        ██║   
+  ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝╚══════╝ ╚═════╝ ╚══════╝╚═╝        ╚═╝   
+  `;
 }
 
 // Collect required providers from config
@@ -236,12 +235,12 @@ export async function setupClinerules(
         const basePath = join(clinerulePath, 'base.md');
         writeFileSync(basePath, legacyContent);
 
-        // Write the vibe-tools rule file
-        const rulesPath = join(clinerulePath, 'vibe-tools.md');
+        // Write the laravelgpt rule file
+        const rulesPath = join(clinerulePath, 'laravelgpt.md');
         let rulesTemplate = generateRules(selectedIde);
-        // Wrap with vibe-tools Integration tags if not already wrapped
-        if (!rulesTemplate.includes('<vibe-tools Integration>')) {
-          rulesTemplate = `<vibe-tools Integration>\n${rulesTemplate}\n</vibe-tools Integration>`;
+        // Wrap with laravelgpt Integration tags if not already wrapped
+        if (!rulesTemplate.includes('<laravelgpt Integration>')) {
+          rulesTemplate = `<laravelgpt Integration>\n${rulesTemplate}\n</laravelgpt Integration>`;
         }
         writeFileSync(rulesPath, rulesTemplate);
 
@@ -253,8 +252,8 @@ export async function setupClinerules(
       // Keep legacy format, update the file
       const rulesPath = clinerulePath;
       let rulesTemplate = generateRules(selectedIde);
-      if (!rulesTemplate.includes('<vibe-tools Integration>')) {
-        rulesTemplate = `<vibe-tools Integration>\n${rulesTemplate}\n</vibe-tools Integration>`;
+      if (!rulesTemplate.includes('<laravelgpt Integration>')) {
+        rulesTemplate = `<laravelgpt Integration>\n${rulesTemplate}\n</laravelgpt Integration>`;
       }
       updateRulesSection(rulesPath, rulesTemplate);
       consola.success(`Updated existing .clinerules file`);
@@ -266,10 +265,10 @@ export async function setupClinerules(
         mkdirSync(clinerulePath, { recursive: true });
       }
 
-      const rulesPath = join(clinerulePath, 'vibe-tools.md');
+      const rulesPath = join(clinerulePath, 'laravelgpt.md');
       let rulesTemplate = generateRules(selectedIde);
-      if (!rulesTemplate.includes('<vibe-tools Integration>')) {
-        rulesTemplate = `<vibe-tools Integration>\n${rulesTemplate}\n</vibe-tools Integration>`;
+      if (!rulesTemplate.includes('<laravelgpt Integration>')) {
+        rulesTemplate = `<laravelgpt Integration>\n${rulesTemplate}\n</laravelgpt Integration>`;
       }
       writeFileSync(rulesPath, rulesTemplate);
       consola.success(`Rules written to ${rulesPath}`);
@@ -287,13 +286,13 @@ export async function* handleLegacyMigration(): CommandGenerator {
       consola.info('Detected legacy .cursor-tools directory.');
 
       const shouldMigrate = await consola.prompt(
-        'Do you want to migrate settings from cursor-tools to vibe-tools?',
+        'Do you want to migrate settings from cursor-tools to laravelgpt?',
         { type: 'confirm' }
       );
 
       if (shouldMigrate) {
-        // Ensure vibe-tools directory exists
-        ensureDirectoryExists(VIBE_HOME_DIR);
+        // Ensure laravelgpt directory exists
+        ensureDirectoryExists(LARAVELGPT_HOME_DIR);
 
         // Check for and migrate env file
         const legacyEnvPath = join(legacyHomeDir, '.env');
@@ -359,3 +358,5 @@ export async function* handleLegacyMigration(): CommandGenerator {
     yield `Error during migration: ${error instanceof Error ? error.message : 'Unknown error'}`;
   }
 }
+
+export { getLaravelGPTLogo as getVibeToolsLogo };

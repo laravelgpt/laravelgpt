@@ -146,7 +146,7 @@ export class PlanCommand implements Command {
 
       let fileProvider;
       try {
-        fileProvider = createProvider(fileProviderName);
+        fileProvider = await createProvider(fileProviderName);
       } catch (error) {
         console.error(`Failed to initialize file provider ${fileProviderName}`, error);
         throw new ProviderError(
@@ -165,7 +165,7 @@ export class PlanCommand implements Command {
 
       let thinkingProvider;
       try {
-        thinkingProvider = createProvider(thinkingProviderName);
+        thinkingProvider = await createProvider(thinkingProviderName);
       } catch (error) {
         console.error(`Failed to initialize thinking provider ${thinkingProviderName}`, error);
         throw new ProviderError(
@@ -327,20 +327,13 @@ export class PlanCommand implements Command {
         }
 
         // Track file provider token usage
-        if ('tokenUsage' in fileProvider && fileProvider.tokenUsage) {
-          options?.trackTelemetry?.({
-            filePromptTokens: fileProvider.tokenUsage.promptTokens,
-            fileCompletionTokens: fileProvider.tokenUsage.completionTokens,
-            fileProvider: fileProviderName,
-            fileModel: fileModel,
-          });
-        } else {
-          // Still track provider and model even if token usage isn't available
-          options?.trackTelemetry?.({
-            fileProvider: fileProviderName,
-            fileModel: fileModel,
-          });
-        }
+        const { promptTokens: filePromptTokens, completionTokens: fileCompletionTokens } = fileProvider.tokenUsage || {};
+        options?.trackTelemetry?.({
+          filePromptTokens,
+          fileCompletionTokens,
+          fileProvider: fileProviderName,
+          fileModel: fileModel,
+        });
       } catch (error) {
         console.error('Error in getRelevantFiles', error);
         throw new ProviderError('Failed to identify relevant files', error);
@@ -405,20 +398,13 @@ export class PlanCommand implements Command {
         );
 
         // Track thinking provider token usage
-        if ('tokenUsage' in thinkingProvider && thinkingProvider.tokenUsage) {
-          options?.trackTelemetry?.({
-            thinkingPromptTokens: thinkingProvider.tokenUsage.promptTokens,
-            thinkingCompletionTokens: thinkingProvider.tokenUsage.completionTokens,
-            thinkingProvider: thinkingProviderName,
-            thinkingModel: thinkingModel,
-          });
-        } else {
-          // Still track provider and model even if token usage isn't available
-          options?.trackTelemetry?.({
-            thinkingProvider: thinkingProviderName,
-            thinkingModel: thinkingModel,
-          });
-        }
+        const { promptTokens: thinkingPromptTokens, completionTokens: thinkingCompletionTokens } = thinkingProvider.tokenUsage || {};
+        options?.trackTelemetry?.({
+          thinkingPromptTokens,
+          thinkingCompletionTokens,
+          thinkingProvider: thinkingProviderName,
+          thinkingModel: thinkingModel,
+        });
       } catch (error) {
         console.error('Error in generatePlan', error);
         throw new ProviderError('Failed to generate implementation plan', error);

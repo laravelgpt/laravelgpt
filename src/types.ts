@@ -31,6 +31,8 @@ export interface CommandOptions {
   // Output options
   saveTo?: string; // Path to save output to in addition to stdout
   quiet?: boolean; // Suppress stdout output (only useful with saveTo)
+  output?: string; // Path to save output to (alternative to saveTo)
+  format?: 'markdown' | 'json' | 'html'; // Output format for documentation
 
   // Context options
   hint?: string; // Additional context or hint for the AI
@@ -61,7 +63,7 @@ export interface CommandMap {
   [key: string]: Command;
 }
 
-// Interface for the vibe-tools.config.json config file
+// Interface for the laravelgpt.config.json config file
 export interface Config {
   ide?: string; // The IDE being used (cursor, claude-code, windsurf, cline, roo)
   reasoningEffort?: ReasoningEffort; // Global default reasoning effort setting
@@ -162,4 +164,9 @@ export interface BaseModelProvider {
   ): Promise<{ supported: boolean; model?: string; error?: string }>;
   // Add this optional method for video analysis
   executeVideoPrompt?(prompt: string, options: VideoAnalysisOptions): Promise<string>;
+}
+
+export interface PackageRuleItem {
+  content: string;
+  rules?: string[];
 }

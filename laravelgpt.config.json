@@ -1,0 +1,25 @@
+{
+  "web": {
+    "provider": "perplexity",
+    "model": "sonar-pro"
+  },
+  "plan": {
+    "file_provision": {
+      "provider": "gemini",
+      "model": "gemini-pro"
+    },
+    "thinking": {
+      "provider": "openai",
+      "model": "gpt-4-turbo-preview"
+    }
+  },
+  "repo": {
+    "provider": "gemini",
+    "model": "gemini-pro"
+  },
+  "doc": {
+    "provider": "gemini",
+    "model": "gemini-pro"
+  },
+  "ide": "cursor"
+}

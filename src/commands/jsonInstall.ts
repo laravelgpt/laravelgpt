@@ -2,7 +2,7 @@ import type { Command, CommandGenerator, CommandOptions, Provider, Config } from
 import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadEnv } from '../config';
-import { generateRules } from '../vibe-rules';
+import { generateRules } from '../laravelgpt-rules';
 import { consola } from 'consola';
 import { colors } from 'consola/utils';
 import {
@@ -309,13 +309,13 @@ export class JsonInstallCommand implements Command {
       // Welcome message (simpler for JSON install)
       const logo = getVibeToolsLogo();
       consola.box({
-        title: '🚀 Vibe-Tools JSON Setup',
+        title: '🚀 LaravelGPT JSON Setup',
         titleColor: 'white',
         borderColor: 'blue',
         style: {
           padding: 1,
         },
-        message: `Configuring vibe-tools using provided JSON.\n${logo}`,
+        message: `Configuring laravelgpt using provided JSON.\n${logo}`,
       });
 
       consola.info('Parsed JSON configuration successfully.');
@@ -326,7 +326,7 @@ export class JsonInstallCommand implements Command {
       // Only prompt if undetermined (null) or explicitly disabled (false)
       if (currentTelemetryStatus === null || currentTelemetryStatus === false) {
         const diagnosticsChoice = await consola.prompt(
-          'Would you like to enable anonymous usage diagnostics to help improve vibe-tools?',
+          'Would you like to enable anonymous usage diagnostics to help improve laravelgpt?',
           {
             type: 'select',
             options: [
@@ -435,7 +435,7 @@ export class JsonInstallCommand implements Command {
         ensureDirectoryExists(rulesDir);
 
         // Write the rules file directly to the new location
-        const rulesPath = join(rulesDir, 'vibe-tools.mdc');
+        const rulesPath = join(rulesDir, 'laravelgpt.mdc');
         try {
           writeFileSync(rulesPath, generateRules('cursor'));
           consola.success(`Rules written to ${colors.cyan(rulesPath)}`);
@@ -507,7 +507,7 @@ export class JsonInstallCommand implements Command {
             break;
           }
           default: {
-            rulesPath = join(process.cwd(), '.cursor', 'rules', 'vibe-tools.mdc');
+            rulesPath = join(process.cwd(), '.cursor', 'rules', 'laravelgpt.mdc');
             rulesTemplate = generateRules('cursor');
             ensureDirectoryExists(join(rulesPath, '..'));
             writeFileSync(rulesPath, rulesTemplate.trim());
@@ -527,15 +527,15 @@ export class JsonInstallCommand implements Command {
           borderStyle: 'rounded',
         },
         message: [
-          `${colors.green('Vibe-Tools has been successfully configured!')}`,
+          `${colors.green('LaravelGPT has been successfully configured!')}`,
           '',
           `📋 Configuration: ${colors.cyan(isLocalConfig ? 'Local' : 'Global')}`,
           `🔧 IDE: ${colors.cyan(selectedIde)}`,
           '',
           `${colors.yellow('Get started with:')}`,
-          `  ${colors.green('vibe-tools repo')} ${colors.white('"Explain this codebase"')}`,
-          `  ${colors.green('vibe-tools web')} ${colors.white('"Search for something online"')}`,
-          `  ${colors.green('vibe-tools plan')} ${colors.white('"Create implementation plan"')}`,
+          `  ${colors.green('laravelgpt repo')} ${colors.white('"Explain this codebase"')}`,
+          `  ${colors.green('laravelgpt web')} ${colors.white('"Search for something online"')}`,
+          `  ${colors.green('laravelgpt plan')} ${colors.white('"Create implementation plan"')}`,
         ].join('\n'),
       });
     } catch (error) {
@@ -554,7 +554,7 @@ export class JsonInstallCommand implements Command {
           `• ${colors.cyan('Check your JSON configuration format')}`,
           `• ${colors.cyan('Ensure you have appropriate permissions')}`,
           '',
-          `If you need assistance, reach out to the vibe-tools team or try re-running the installation.`,
+          `If you need assistance, reach out to the laravelgpt team or try re-running the installation.`,
         ].join('\n'),
       });
     }

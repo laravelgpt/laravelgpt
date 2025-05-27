@@ -1,9 +1,10 @@
-import { readFileSync, existsSync } from 'node:fs';
-import { join, dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { execSync } from 'child_process';
+import { readFileSync } from 'fs';
+import { join, dirname } from 'path';
 import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
 import consola from 'consola';
+import { fileURLToPath } from 'url';
 
 const execAsync = promisify(exec);
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -15,54 +16,47 @@ export interface VersionInfo {
 }
 
 /**
- * Gets the currently installed version of vibe-tools by searching upwards
- * for a package.json file with the name "vibe-tools".
+ * Gets the currently installed version of laravelgpt by searching upwards
+ * for a package.json file with the name "laravelgpt".
  */
 export function getCurrentVersion(): string {
-  let currentDir = __dirname;
-  let attempts = 0;
-  const maxAttempts = 5; // Prevent infinite loops
+  try {
+    // First try to get version from package.json in the current directory
+    const packageJsonPath = join(process.cwd(), 'package.json');
+    const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
+    if (packageJson.version) {
+      return packageJson.version;
+    }
 
-  while (attempts < maxAttempts) {
-    const packageJsonPath = join(currentDir, 'package.json');
-    if (existsSync(packageJsonPath)) {
-      try {
-        const packageJsonContent = readFileSync(packageJsonPath, 'utf-8');
-        const packageJson = JSON.parse(packageJsonContent);
-
-        if (packageJson.name === 'vibe-tools') {
-          consola.debug('Found vibe-tools package.json at:', packageJsonPath);
-          return packageJson.version;
-        }
-      } catch (error) {
-        // Ignore errors reading/parsing intermediate package.json files
-        consola.debug('Error reading/parsing intermediate package.json:', packageJsonPath, error);
+    // If that fails, try npm list
+    try {
+      const npmListOutput = execSync('npm list -g laravelgpt', { encoding: 'utf8' });
+      const versionMatch = npmListOutput.match(/laravelgpt@([\d.]+)/);
+      if (versionMatch && versionMatch[1]) {
+        return versionMatch[1];
       }
+    } catch (npmError) {
+      consola.debug('npm list failed:', npmError);
     }
 
-    const parentDir = resolve(currentDir, '..');
-    // Stop if we have reached the root directory
-    if (parentDir === currentDir) {
-      break;
-    }
-    currentDir = parentDir;
-    attempts++;
+    // If all else fails, return a default version
+    return '0.0.0';
+  } catch (error) {
+    consola.debug('Error getting version:', error);
+    return '0.0.0';
   }
-
-  consola.error('Could not find vibe-tools package.json by searching upwards from', __dirname);
-  return '0.0.0'; // Fallback version
 }
 
 /**
- * Gets the latest available version of vibe-tools from the NPM registry.
- * Uses `npm view vibe-tools version`.
+ * Gets the latest available version of laravelgpt from the NPM registry.
+ * Uses `npm view laravelgpt version`.
  */
 export async function getLatestVersion(): Promise<string | null> {
   try {
-    const { stdout } = await execAsync('npm view vibe-tools version');
+    const { stdout } = await execAsync('npm view laravelgpt version');
     return stdout.trim();
   } catch (error) {
-    consola.warn('Failed to fetch latest version from NPM:', error);
+    consola.debug('Failed to fetch latest version from NPM:', error);
     return null; // Indicate failure to fetch
   }
 }
@@ -74,53 +68,38 @@ export async function getLatestVersion(): Promise<string | null> {
  */
 export async function checkPackageVersion(): Promise<VersionInfo> {
   try {
-    const current = getCurrentVersion();
-    // If we couldn't even get the current version, don't proceed with check/update
-    if (current === '0.0.0') {
-      consola.warn('Could not determine current package version. Skipping update check.');
-      return { current: '0.0.0', latest: null, isOutdated: false };
+    const currentVersion = getCurrentVersion();
+    if (currentVersion === '0.0.0') {
+      consola.debug('Could not determine current version');
+      return {
+        current: '0.0.0',
+        latest: null,
+        isOutdated: false,
+      };
     }
 
-    const latest = await getLatestVersion();
-
-    if (latest) {
-      const [currentMajor, currentMinor, currentPatchish] = current.split('.');
-      const currentPatch = currentPatchish?.split('-')[0];
-
-      const [latestMajor, latestMinor, latestPatchish] = latest.split('.');
-      const latestPatch = latestPatchish?.split('-')[0];
-
-      let isOutdated = false;
-      if (parseInt(currentMajor) < parseInt(latestMajor)) {
-        isOutdated = true;
-      }
-      if (
-        parseInt(currentMajor) === parseInt(latestMajor) &&
-        parseInt(currentMinor) < parseInt(latestMinor)
-      ) {
-        isOutdated = true;
-      }
-      if (
-        parseInt(currentMajor) === parseInt(latestMajor) &&
-        parseInt(currentMinor) === parseInt(latestMinor) &&
-        parseInt(currentPatch) < parseInt(latestPatch)
-      ) {
-        isOutdated = true;
-      }
+    // Get latest version from npm
+    try {
+      const npmViewOutput = execSync('npm view laravelgpt version', { encoding: 'utf8' }).trim();
+      const latestVersion = npmViewOutput;
 
       return {
-        current,
-        latest,
-        isOutdated,
+        current: currentVersion,
+        latest: latestVersion,
+        isOutdated: latestVersion !== currentVersion,
       };
-    } else {
-      consola.warn('Could not determine latest package version. Skipping update check.');
-      return { current, latest: null, isOutdated: false };
+    } catch (npmError) {
+      consola.debug('Failed to fetch latest version:', npmError);
+      return {
+        current: currentVersion,
+        latest: null,
+        isOutdated: false,
+      };
     }
   } catch (error) {
-    consola.warn('Error checking package version:', error);
+    consola.debug('Error checking package version:', error);
     return {
-      current: '0.0.0', // Ensure fallback on any check error
+      current: getCurrentVersion(),
       latest: null,
       isOutdated: false,
     };

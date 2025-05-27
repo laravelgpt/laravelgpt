@@ -7,7 +7,7 @@ import { createProvider } from '../../providers/base';
 interface YouTubeCommandOptions extends CommandOptions {
   type?: 'summary' | 'transcript' | 'plan' | 'review' | 'custom';
   duration?: 'short' | 'medium' | 'full';
-  format?: 'markdown' | 'json' | 'text';
+  format?: 'markdown' | 'json' | 'html';
 }
 
 export class YouTubeCommand implements Command {

@@ -291,19 +291,25 @@ export class TestCommand implements Command {
           const scenarioOutputBuffer: string[] = [];
 
           try {
+            const provider = await geminiProvider();
             const scenarioResult = await executeScenario(
               scenario,
               {
-                provider,
-                model,
-                timeout,
-                retryConfig,
-                debug,
-                mcpServers,
-                scenarioId,
+                model: 'gemini-pro',
+                provider: 'anthropic',
+                timeout: 30000,
+                retryConfig: {
+                  initialDelay: 1000,
+                  maxDelay: 5000,
+                  factor: 2,
+                  retries: 3,
+                  jitter: true
+                },
+                debug: true,
+                scenarioId: scenario.id,
                 outputBuffer: scenarioOutputBuffer,
               },
-              geminiProvider()
+              provider
             );
 
             scenarioResult.outputBuffer = scenarioOutputBuffer;

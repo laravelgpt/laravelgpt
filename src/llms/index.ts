@@ -1,15 +1,15 @@
-import type { PackageRuleItem } from 'vibe-rules';
-import { VIBE_TOOLS_CORE_CONTENT, VIBE_TOOLS_RULES_VERSION } from '../vibe-rules.js';
+import type { PackageRuleItem } from '../rules';
+import { LARAVELGPT_CORE_CONTENT, LARAVELGPT_RULES_VERSION } from '../laravelgpt-rules.js';
 
-const processedRuleContent = VIBE_TOOLS_CORE_CONTENT.replace(
-  '${VIBE_TOOLS_RULES_VERSION}',
-  VIBE_TOOLS_RULES_VERSION
+const processedRuleContent = LARAVELGPT_CORE_CONTENT.replace(
+  '${LARAVELGPT_RULES_VERSION}',
+  LARAVELGPT_RULES_VERSION
 );
 
 const rules: PackageRuleItem[] = [
   {
-    name: 'vibe-tools-rule',
-    description: 'Vibe Tools',
+    name: 'laravelgpt-rule',
+    description: 'LaravelGPT',
     rule: processedRuleContent,
     alwaysApply: true,
     globs: ['*', '**/*'],

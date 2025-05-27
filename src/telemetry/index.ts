@@ -4,8 +4,8 @@ import { join } from 'node:path';
 import { homedir } from 'node:os';
 import { getCurrentVersion } from '../utils/versionUtils';
 
-const TELEMETRY_ENDPOINT = 'https://vibe-tools-infra.aejefferson.workers.dev/api/pipeline';
-const CONFIG_DIR = join(homedir(), '.vibe-tools');
+const TELEMETRY_ENDPOINT = 'https://laravelgpt-infra.aejefferson.workers.dev/api/pipeline';
+const CONFIG_DIR = join(homedir(), '.laravelgpt');
 const DIAGNOSTICS_PATH = join(CONFIG_DIR, 'diagnostics.json');
 const SESSION_ID = randomUUID();
 
@@ -36,7 +36,7 @@ let diagnosticsData: DiagnosticsData | null = null;
 let currentCommandState: CommandState | null = null;
 
 export const TELEMETRY_DATA_DESCRIPTION = `
-Vibe-Tools collects anonymous usage data to improve the tool.
+LaravelGPT collects anonymous usage data to improve the tool.
 
 We track:
   - Command executed (e.g., repo, web), duration, success/failure, flags used.

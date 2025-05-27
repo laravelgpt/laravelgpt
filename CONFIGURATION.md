@@ -55,7 +55,9 @@ Create this file in your project root to customize behavior. Here's a comprehens
   "doc": {
     "maxRepoSizeMB": 100, // Maximum repository size for remote docs
     "provider": "gemini", // Default provider for doc generation
-    "maxTokens": 10000 // Maximum tokens for responses
+    "maxTokens": 10000, // Maximum tokens for responses
+    "format": "markdown",
+    "output": "docs/README.md"
   },
   "browser": {
     "defaultViewport": "1280x720", // Default browser window size
@@ -113,6 +115,8 @@ Create this file in your project root to customize behavior. Here's a comprehens
 - `maxRepoSizeMB`: Size limit for remote repositories
 - `provider`: Default AI provider for documentation
 - `maxTokens`: Maximum tokens in responses
+- `format`: Output format (markdown, json, html)
+- `output`: Default output file path
 
 ### Browser Automation Settings
 
@@ -234,93 +238,4 @@ You can set a default provider in your `vibe-tools.config.json` file under the `
 }
 ```
 
-You can also set a default model in your `vibe-tools.config.json` file under the `stagehand` section:
-
-```json
-{
-  "stagehand": {
-    "provider": "openai", // or "anthropic"
-    "model": "gpt-4o"
-  }
-}
-```
-
-If no model is specified (either on the command line or in the config), a default model will be used based on your configured provider:
-
-- **OpenAI:** `o3-mini`
-- **Anthropic:** `claude-sonnet-4-20250514`
-
-Available models depend on your configured provider (OpenAI or Anthropic) in `vibe-tools.config.json` and your API key.
-
-## Cursor Configuration
-
-`vibe-tools` automatically configures Cursor by updating your project rules during installation. This provides:
-
-- Command suggestions
-- Usage examples
-- Context-aware assistance
-
-For new installations, we use the recommended `.cursor/rules/vibe-tools.mdc` path. For existing installations, we maintain compatibility with the legacy `.cursorrules` file. If both files exist, we prefer the new path and show a warning.
-
-### Cursor Agent Configuration
-
-To get the benefits of vibe-tools you should use Cursor agent in "yolo mode". Ideal settings:
-
-![image](https://github.com/user-attachments/assets/783e26cf-c339-4cae-9629-857da0359cef)
-
-## Command-Specific Configuration
-
-### Ask Command
-
-The `ask` command requires both a provider and a model to be specified. While these must be provided via command-line arguments, the maxTokens can be configured through the provider-specific settings:
-
-```json
-{
-  "openai": {
-    "maxTokens": 8000 // Will be used when provider is "openai"
-  },
-  "anthropic": {
-    "maxTokens": 8000 // Will be used when provider is "anthropic"
-  }
-}
-```
-
-### Plan Command
-
-The plan command uses two different models:
-
-1. A file identification model (default: Gemini with gemini-2.5-flash-preview-05-20)
-2. A thinking model for plan generation (default: OpenAI with o3-mini)
-
-You can configure both models and their providers:
-
-```json
-{
-  "plan": {
-    "fileProvider": "gemini",
-    "thinkingProvider": "openai",
-    "fileModel": "gemini-2.5-pro-preview",
-    "thinkingModel": "o3",
-    "fileMaxTokens": 8192,
-    "thinkingMaxTokens": 8192
-  }
-}
-```
-
-The OpenAI o3-mini model is chosen as the default thinking provider for its speed and efficiency in generating implementation plans.
-
-## MCP Configuration
-
-The `vibe-tools mcp run` command supports using OpenRouter as a provider. You can configure this using the following:
-
-- **`--provider` (Command-line option):** Specify the provider to use. Valid values are `anthropic` (default) and `openrouter`.
-- **`--model` (Command-line option):** Specify the OpenRouter model to use (e.g., `openai/o3-mini`). This option is ignored if the provider is Anthropic.
-- **Environment Variable:** You _must_ set either `ANTHROPIC_API_KEY` or `OPENROUTER_API_KEY` in your environment.
-
-**Default Behavior:**
-
-- If `--provider` is not specified, `anthropic` is used by default.
-- If `--model` is not specified and the provider is `openrouter` a provider default model is used.
-
-**Example `vibe-tools.config.json`:**
-The `vibe-tools.config.json` is not currently used to configure MCP.
+You can also set a default model in your `
