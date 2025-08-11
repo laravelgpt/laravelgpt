@@ -4,20 +4,16 @@
 <h3 align="center">💻 Senior Full-Stack Developer | 🚀 AI & Automation Architect | 🛠 Software Engineer</h3>
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?size=25&color=00FFAA&center=true&vCenter=true&width=800&lines=Full-Stack+Developer;AI+%26+OSINT+Specialist;Mobile+Unlock+Expert;Reverse+Engineer;Software+Engineer;Data+Structures+%26+Algorithms+Enthusiast;System+Design+Specialist;Competitive+Programming+Lover" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.herokuapp.com?size=25&color=00FFAA&center=true&vCenter=true&width=900&lines=Full-Stack+Developer;AI+%26+OSINT+Specialist;Mobile+Unlock+Expert;Reverse+Engineer;Software+Engineer;Data+Structures+%26+Algorithms+Enthusiast;System+Design+Specialist;Problem+Solving+Expert" alt="Typing SVG" />
 </p>
 
 ---
 
-## 🛠 Tech Stack & Tools
+## 🛠 Tech Stack
 <p align="center">
-  <!-- Languages -->
   <img src="https://skillicons.dev/icons?i=python,php,js,ts,java,cpp,csharp,go,rust,kotlin,swift&theme=dark" /><br/>
-  <!-- Frameworks -->
   <img src="https://skillicons.dev/icons?i=laravel,react,nextjs,vue,nuxt,angular,nodejs,express,django,flask,spring,flutter,qt&theme=dark" /><br/>
-  <!-- Databases & Cloud -->
   <img src="https://skillicons.dev/icons?i=mysql,postgres,mongodb,redis,sqlite,firebase,supabase,aws,azure,gcp&theme=dark" /><br/>
-  <!-- Tools -->
   <img src="https://skillicons.dev/icons?i=docker,kubernetes,git,github,gitlab,vscode,idea,postman,figma,notion&theme=dark" />
 </p>
 
@@ -33,11 +29,19 @@
 
 ---
 
-## 🏆 Competitive Programming Stats
+## 🏆 Problem Solving Stats
 <p align="center">
-  <img src="https://leetcard.jacoblin.cool/laravelgpt?theme=dark&font=Roboto&ext=activity" height="230" />
-  <img src="https://cp-logo.vercel.app/codeforces/laravelgpt" height="230" />
-  <img src="https://github-readme-hackerrank-stats.vercel.app/api?husername=laravelgpt&theme=dark" height="230" />
+  <!-- LeetCode -->
+  <img src="https://leetcard.jacoblin.cool/laravelgpt?theme=dark&font=Roboto&ext=contest" height="250" />
+  <!-- Codeforces -->
+  <img src="https://codeforces-readme-stats.vercel.app/api/card?username=laravelgpt&theme=github_dark" height="250" />
+</p>
+
+<p align="center">
+  <!-- HackerRank -->
+  <img src="https://github-readme-hackerrank-stats.vercel.app/api?husername=laravelgpt&theme=dark" height="250" />
+  <!-- GeeksForGeeks -->
+  <img src="https://gfg-stats.vercel.app/api?userName=laravelgpt&theme=dark" height="250" />
 </p>
 
 ---
@@ -67,14 +71,14 @@
 
 ---
 
-## 🐍 Contribution Graph Animation
+## 🐍 Contribution Graph
 <p align="center">
   <img src="https://raw.githubusercontent.com/Platane/snk/output/github-contribution-grid-snake.svg" alt="snake animation" />
 </p>
 
 ---
 
-## 🎬 Animated Developer Banner
+## 🎬 Developer Animation
 <p align="center">
   <img src="https://i.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.webp" width="800"/>
 </p>
