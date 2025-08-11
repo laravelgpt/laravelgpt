@@ -1,10 +1,10 @@
 <!-- 🌟 Professional GitHub Profile for @laravelgpt -->
 
 <h1 align="center">👋 Hi, I'm <span style="color:#00FFAA;">MD Shamim Hossain</span></h1>
-<h3 align="center">💻 Senior Full-Stack Developer | 🚀 AI & Automation Architect</h3>
+<h3 align="center">💻 Senior Full-Stack Developer | 🚀 AI & Automation Architect | 🛠 Software Engineer</h3>
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?size=25&color=00FFAA&center=true&vCenter=true&width=650&lines=Full-Stack+Developer;AI+%26+OSINT+Specialist;Mobile+Unlock+Expert;Reverse+Engineer;Open+Source+Contributor" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.herokuapp.com?size=25&color=00FFAA&center=true&vCenter=true&width=650&lines=Full-Stack+Developer;AI+%26+OSINT+Specialist;Mobile+Unlock+Expert;Reverse+Engineer;Software+Engineer;Data+Structures+%26+Algorithms+Enthusiast" alt="Typing SVG" />
 </p>
 
 ---
@@ -38,8 +38,19 @@
 - 🔭 Currently building **AI Integrated SaaS Platforms**
 - 🌱 Exploring **Deep Learning, LLMs, and Agent Systems**
 - 🛠 15+ Years of Experience in Software Development
+- 🧠 Passionate about **Engineering Principles** & **Problem Solving**
+- 💡 Solving complex challenges using **Data Structures & Algorithms**
 - 🌍 Working Globally with Clients & Open Source Communities
-- 💬 Ask me about **Laravel, Livewire, Python Automation, AI Agents, Reverse Engineering**
+
+---
+
+### 📚 Engineering & DSA
+<p align="center">
+  <img src="https://img.shields.io/badge/Algorithm%20Design-00599C?style=for-the-badge&logo=thealgorithms&logoColor=white" />
+  <img src="https://img.shields.io/badge/System%20Design-FFA500?style=for-the-badge&logo=databricks&logoColor=white" />
+  <img src="https://img.shields.io/badge/Data%20Structures-4CAF50?style=for-the-badge&logo=codeforces&logoColor=white" />
+  <img src="https://img.shields.io/badge/Competitive%20Programming-1E90FF?style=for-the-badge&logo=leetcode&logoColor=white" />
+</p>
 
 ---
 
