@@ -111,8 +111,8 @@ As the founder of **Red Hackers**, I lead research in:
 ## 🌍 Connect with Me
 
 - 🐙 **GitHub**: [github.com/laravelgpt](https://github.com/laravelgpt)  
-- 📡 **Telegram**: `@ComingSoon`  
-- 🌐 **Website**: Coming Soon  
+- 📡 **Telegram**: `@laravelgpt`  
+- 🌐 **Website**: shamimhossain.com.bd 
 - 📘 **Facebook**: [facebook.com/shamimdevs](https://facebook.com/shamimdevs)
 
 ---
