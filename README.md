@@ -79,8 +79,8 @@ As the founder of **Red Hackers**, I lead research in:
 
 ## 🧬 Tech Stack
 
-**Languages**: PHP, Python, JavaScript, C++, C#, VB.NET, SQL, Bash  
-**Frameworks**: Laravel, Tailwind, PyQt, Tkinter, Vue, WinForms  
+**Languages**: PHP, Python, JavaScript, typescript, C#, VB.NET, SQL, Bash  
+**Frameworks**: Laravel, Tailwind, PyQt, Tkinter,react, Vue, WinForms  
 **AI Models**: GPT-4.5, Claude, Gemini, SDXL, Whisper  
 **Security Tools**: IDA, Ghidra, Radare2, Wireshark, PEStudio  
 **Bot Tools**: Pyrogram, Telethon, PHP Sockets, Telegram Bot API  
