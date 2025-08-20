@@ -19,7 +19,7 @@ As the founder of **Red Hackers**, I lead research in:
 
 ---
 
-## 🧰 My Arsenal
+## 🧰 My Knowledge
 
 ### 💻 Web Development (SaaS + Secure)
 - **Laravel 10–12**, Livewire, Tailwind, Vue, Alpine.js  
