@@ -114,7 +114,7 @@ As the founder of **Red Hackers**, I lead research in:
 - 📡 **Telegram**: `@laravelgpt`  
 - 🌐 **Website**: shamimhossain.com.bd 
 - 📘 **Facebook**: [facebook.com/shamimdevs](https://facebook.com/shamimdevs)
-
+-    **Email**: shamimstack@gmail.com
 ---
 
 > 🧠 **“Code the unseen. Automate the unknown. Unlock the impossible.”**  
